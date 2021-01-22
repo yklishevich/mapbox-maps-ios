@@ -122,7 +122,7 @@ public struct Examples {
                 description: "Update the position of a point annotation tapping the map.",
                 type: UpdatePointAnnotationPositionExample.self),
         Example(title: "Add a 3D Model to the map",
-                description: "",
+                description: "Add a 3D Model to the map",
                 type: ModelExample.self),
         Example(title: "Restrict the map's coordinate bounds",
                 description: "Prevent the map from panning outside the specified coordinate bounds.",
