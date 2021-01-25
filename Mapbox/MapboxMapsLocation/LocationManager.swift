@@ -62,6 +62,11 @@ public class LocationManager: NSObject {
         toggleUserLocationUpdates(showUserLocation: locationOptions.showUserLocation)
     }
 
+    /**
+     Updates the `locationProvider` object. This allows a custom location provider so events can be controlled
+
+     - Parameter customLocationProvider: A conformer to LocationProvider
+     */
     public func overrideLocationProvider(with customLocationProvider: LocationProvider) {
 
         /// Deinit original location provider
@@ -74,10 +79,20 @@ public class LocationManager: NSObject {
         locationProvider.setDelegate(self)
     }
 
+    /**
+     Adds a `locationConsumer` object. This allows location events to be sent to that consumer
+
+     - Parameter consumer: A conformer to LocationConsumer
+     */
     public func addLocationConsumer(newConsumer consumer: LocationConsumer) {
         self.consumers.add(consumer)
     }
 
+    /**
+     Removes a `locationConsumer` object.
+
+     - Parameter consumer: A conformer to LocationConsumer
+     */
     public func removeLocationConsumer(consumer: LocationConsumer) {
         self.consumers.remove(consumer)
     }

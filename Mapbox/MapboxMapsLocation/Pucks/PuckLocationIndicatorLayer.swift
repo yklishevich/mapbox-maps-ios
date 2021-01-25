@@ -10,6 +10,7 @@ import MapboxMapsFoundation
 import MapboxMapsStyle
 #endif
 
+/// This struct represents the `puck2D` option from the `LocationPuck` enum
 public struct LocationIndicatorLayerViewModel: Equatable {
 
     /// Image to use as the top of the location indicator.

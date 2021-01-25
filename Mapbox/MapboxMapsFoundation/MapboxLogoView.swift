@@ -3,6 +3,7 @@ import UIKit
 // swiftlint:disable function_body_length file_length type_body_length
 public class MapboxLogoView: UIView {
 
+    /// Enum representing the logo size
     public enum MapboxLogoSize: RawRepresentable {
         case regular
         case compact

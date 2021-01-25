@@ -21,7 +21,7 @@ internal enum PuckStyle {
 /// This enum represents the different backends that can be used for Pucks
 public enum LocationPuck: Equatable {
     case puck2D(customize: ((inout LocationIndicatorLayerViewModel) -> Void)? = nil) // Backed by `LocationIndicatorLayer`. Implement customize block to granularly modify the puck's styling.
-    case puck3D(customize: ((inout PuckModelLayerViewModel) -> Void))// Backed by `ModelLayer`. Implement customize block to granularly modify the puck's styling.
+    case puck3D(customize: ((inout PuckModelLayerViewModel) -> Void)) // Backed by `ModelLayer`. Implement customize block to granularly modify the puck's styling.
 
     public static func == (lhs: LocationPuck, rhs: LocationPuck) -> Bool {
         switch (lhs, rhs) {

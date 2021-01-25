@@ -19,11 +19,11 @@ public class MapboxCompassOrnamentView: UIButton {
     }
 
     internal var tapAction: (() -> Void)?
-
     private var compassBackgroundColor: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     private var needleColor: UIColor = #colorLiteral(red: 0.9971256852, green: 0.2427211106, blue: 0.196741581, alpha: 1)
     private var lineColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     private let directionFormatter = CompassDirectionFormatter()
+
     /// Should be in range [-pi; pi]
     public var currentBearing: CLLocationDirection = 0 {
         didSet {

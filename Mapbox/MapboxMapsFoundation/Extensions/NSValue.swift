@@ -1,5 +1,6 @@
 import CoreLocation
 
+// MARK: - NSValue
 extension NSValue {
 
     /// Converts the `CGPoint` value of an `NSValue` to a `CLLocationCoordinate2D`.

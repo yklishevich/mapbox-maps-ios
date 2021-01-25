@@ -199,6 +199,7 @@ public class CameraView: UIView {
     }
 }
 
+// MARK: Extensions
 public extension EdgeInsets {
     func toUIEdgeInsetsValue() -> UIEdgeInsets {
         return UIEdgeInsets(top: CGFloat(self.top),

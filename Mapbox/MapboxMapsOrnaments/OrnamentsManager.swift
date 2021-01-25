@@ -21,6 +21,7 @@ left           bottom          right
                center
 */
 
+/// Enum representing the position of the ornament on the screen
 public enum OrnamentPosition: String, Equatable {
     // Clockwise from top left
     case topLeft
@@ -33,12 +34,14 @@ public enum OrnamentPosition: String, Equatable {
     case centerLeft
 }
 
+/// Enum representing whether the ornament should be displayed
 public enum OrnamentVisibility: String, Equatable {
     case adaptive
     case hidden
     case visible
 }
 
+/// Enum representing the type of ornament to be displayed
 public enum OrnamentType: Hashable {
     case mapboxLogoView
     case mapboxScaleBar

@@ -1,10 +1,13 @@
 import UIKit
 import CoreLocation
 
+/// This class adds Supportable Protocols for specific frameworks to extend MapView functionality
+
+// MARK: Ornament Supportable View
 extension MapView: OrnamentSupportableView {
     // User has tapped on an ornament
     public func tapped() {
-
+        print("Not yet implemented")
     }
 
     public func compassTapped() {
@@ -25,6 +28,7 @@ extension MapView: OrnamentSupportableView {
     }
 }
 
+// MARK: Location Supportable View
 extension MapView: LocationSupportableMapView {
 
     public func screenCoordinate(for locationCoordinate: CLLocationCoordinate2D) -> ScreenCoordinate {

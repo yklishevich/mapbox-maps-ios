@@ -7,7 +7,7 @@ public extension CameraOptions {
     /**
     The `CameraOptions` object contains information about the current state of the camera.
 
-    - Parameter centerCoordinate: The map coordinate that will represent the center of the viewport.
+    - Parameter center: The map coordinate that will represent the center of the viewport.
     - Parameter padding: The padding surrounding the `CameraView`'s viewport. Defaults to nil.
     - Parameter anchor: Point in this `CameraView`'s coordinate system on which to “anchor”
                         responses to user-initiated gestures.

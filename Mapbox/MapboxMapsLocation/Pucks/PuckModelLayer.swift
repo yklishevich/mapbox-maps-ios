@@ -10,6 +10,7 @@ import MapboxMapsFoundation
 import MapboxMapsStyle
 #endif
 
+/// This struct represents the `puck3D` option from the `LocationPuck` enum
 public struct PuckModelLayerViewModel: Equatable {
 
     /// The model to use as the locaiton puck

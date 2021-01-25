@@ -3,12 +3,14 @@ import UIKit
 public typealias OrnamentMargins = CGPoint
 
 public class Ornament: Equatable {
+    // MARK: Properties
     public var view: UIView?
     public let type: OrnamentType
     public let position: OrnamentPosition
     public let margins: OrnamentMargins
     public let visibility: OrnamentVisibility
 
+    // MARK: Initializers
     convenience internal init(view: UIView?,
                             type: OrnamentType,
                             position: OrnamentPosition,

@@ -42,6 +42,7 @@ extension MapView {
         updateUserLocationManager(with: mapOptions.location)
     }
 
+    // MARK: Manager Setup Functions
     internal func setupMapView() {
 
         // Set prefetch zoom delta
