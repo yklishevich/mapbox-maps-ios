@@ -2,8 +2,14 @@ import Foundation
 import UIKit
 
 @_functionBuilder
+/// A function builder struct that builds expressions.
 public struct ExpressionBuilder {
 
+    /**
+     Build an `Expression` arguments that conform to the `ValidExpressionObject` protocol.
+     - Parameter arguments:
+     - Returns: Returns an `Expression` that contains the arguments as the `Expression.expressionElements` value.
+     */
     public static func buildBlock(_ arguments: ValidExpressionArgument...) -> Expression {
 
         var expressionElements = [Expression.Element]()
@@ -16,7 +22,9 @@ public struct ExpressionBuilder {
     }
 }
 
+/// A protocol for objects that can be used to create `Expression` values.
 public protocol ValidExpressionArgument {
+    /// An array of expression elements.
     var expressionElements: [Expression.Element] { get }
 }
 

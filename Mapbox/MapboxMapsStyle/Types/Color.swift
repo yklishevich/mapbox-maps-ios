@@ -1,9 +1,10 @@
 import UIKit
 
+/// A `String` representing a rgba `UIColor` value.
 public typealias ColorRepresentable = String
 extension ColorRepresentable {
 
-    /// Create a string representation of a `UIColor`
+    /// Create a string representation of a `UIColor` value..
     public init(color: UIColor) {
         var red: CGFloat = 0.0
         var green: CGFloat = 0.0
@@ -16,7 +17,7 @@ extension ColorRepresentable {
 
 public extension UIColor {
 
-    /// Initialize a `UIColor` from a `ColorRepresentable`
+    /// Initialize a `UIColor` from a `ColorRepresentable` string.
     convenience init?(hex: ColorRepresentable?) {
         guard let hex = hex else { return nil }
 
@@ -48,6 +49,7 @@ public extension UIColor {
 
 extension UIColor : ValidExpressionArgument {
 
+    /// Builds an `Expression` with a `UIColor` object.
     public var expressionElements: [Expression.Element] {
         var red: CGFloat = 0.0
         var green: CGFloat = 0.0

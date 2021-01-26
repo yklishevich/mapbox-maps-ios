@@ -4,7 +4,7 @@ public typealias Exp = Expression
 
 public struct Expression: Codable, CustomStringConvertible, Equatable {
 
-    /// The individual elements of the expression in an array
+    /// The individual elements of the expression in an array.
     public var elements: [Element]
 
     // swiftlint:disable identifier_name
@@ -20,7 +20,7 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
         self.init(with: elements)
     }
 
-    /// Attempts to create an Expression from a jsonObject.
+    /// Attempts to create an `Expression` from a jsonObject.
     public init?(from jsonObject: Any) {
         do {
             let data = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
@@ -38,6 +38,7 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
         return jsonObject
     }
 
+    /// Encodes the contents of `Expression.elements`.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.unkeyedContainer()
 
@@ -46,10 +47,12 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
         }
     }
 
+    /// Initialize an `Expression` with an array of expression elements.
     public init(with elements: [Element]) {
         self.elements = elements
     }
 
+    /// A string that describes the elements of an expression.
     public var description: String {
         return "[" + elements.map { "\($0)" }.joined(separator: ", ") + "]"
     }
@@ -123,7 +126,7 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
     }
 
     /// An `ExpressionArgument` is either a literal (associated with a double, string, boolean, or null value)
-    /// or another `Expression`
+    /// or another `Expression`.
     public indirect enum Argument: Codable, CustomStringConvertible, Equatable {
 
         case number(Double)
