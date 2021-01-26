@@ -1,5 +1,7 @@
 import UIKit
 import MapboxMaps
+import CoreLocation
+import simd
 
 @objc(CustomLayerExample)
 
@@ -105,11 +107,42 @@ extension CustomLayerExample: CustomLayerHost {
 
     public func render(_ parameters: CustomLayerRenderParameters, mtlCommandBuffer: MTLCommandBuffer, mtlRenderPassDescriptor: MTLRenderPassDescriptor) {
 
-        let vertices = [
-            simd_float2(0, 0.5),
-            simd_float2(0.5, -0.5),
-            simd_float2(-0.5, -0.5)
+        let coords = [
+            CLLocationCoordinate2D(latitude: 48.864716, longitude: 2.349014), // Paris
+            CLLocationCoordinate2D(latitude: 52.52, longitude: 13.405), // Berlin
+            CLLocationCoordinate2D(latitude: 41.9028, longitude: 12.4964) // Rome
         ]
+
+        // Project to mercator
+        let zoomScale = pow(2, Double(parameters.zoom))
+        let mercatorCoords: [simd_double4] = coords.map {
+            let mercator = try! Projection.project(for: $0, zoomScale: zoomScale)
+            let vec = simd_double4(x: mercator.x, y: mercator.y, z: 0, w: 1)
+            return vec
+        }
+
+        // Build the projection matrix.
+        var projection = simd_double4x4()
+
+        for (index, num) in parameters.projectionMatrix.enumerated() {
+            let element = num.doubleValue
+            let (col, row) = index.quotientAndRemainder(dividingBy: 4)
+            projection[row][col] = element
+        }
+
+        // Scale factor is needed
+        let height = parameters.height
+        let scale = 2.0 / (height * Double(UIScreen.main.scale))
+
+        let scaleMatrix = simd_double4x4(diagonal: simd_double4(scale, scale, 1, 1))
+
+        projection *= scaleMatrix
+
+        // Transform and scale.
+        let vertices: [simd_float2] = mercatorCoords.map {
+            let projected = $0 * projection
+            return simd_float2(Float(projected.x), Float(projected.y))
+        }
 
         guard let renderCommandEncoder = mtlCommandBuffer.makeRenderCommandEncoder(descriptor: mtlRenderPassDescriptor) else {
             fatalError("Could not create render command encoder from render pass descriptor.")
