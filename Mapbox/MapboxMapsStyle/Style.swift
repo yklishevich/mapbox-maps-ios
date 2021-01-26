@@ -320,6 +320,12 @@ public class Style {
                                          value: geoJSONDictionary)
     }
 
+    /**
+     Adds the specified `Terrain` to the style. See the [Mapbox Style Specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/terrain/) for additional information.
+     - Parameter terrain: The `Terrain` to add to the map's style. 
+     - Returns: If operation successful, returns a `true` as part of the `Result` success case.
+                Else, returns an `TerrainError` in the `Result` failure case.
+     */
     public func setTerrain(_ terrain: Terrain) -> Result<Bool, TerrainError> {
         do {
             let terrainData = try JSONEncoder().encode(terrain)
