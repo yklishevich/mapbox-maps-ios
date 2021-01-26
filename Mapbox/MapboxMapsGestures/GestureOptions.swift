@@ -1,5 +1,6 @@
 import UIKit
 
+/// Used to determine whether a map responds to horizontal and/or vertical pan gestures.
 public enum PanScrollingMode: String, Equatable {
     /// The map allows the user to only scroll horizontally.
     case horizontal

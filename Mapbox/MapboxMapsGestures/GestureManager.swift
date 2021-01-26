@@ -24,7 +24,7 @@ public enum GestureType: Hashable {
     /// The pitch gesture type
     case pitch
 
-    // Generates a handler for every gesture type
+    /// Generates a handler for every gesture type.
     // swiftlint:disable explicit_acl
     func makeHandler(for view: UIView,
                      delegate: GestureHandlerDelegate,
@@ -49,7 +49,7 @@ public enum GestureType: Hashable {
         }
     }
 
-    // Provides understanding of equality between gesture types
+    /// Provides understanding of equality between gesture types.
     public static func == (lhs: GestureType, rhs: GestureType) -> Bool {
         switch (lhs, rhs) {
         // Compares two pan gesture types (always true)
@@ -100,12 +100,14 @@ internal class GestureHandler {
     }
 }
 
+/// The delegate that a `GestureManager` conforms to.
 public protocol GestureManagerDelegate {
 
-    /// Informs the delegate that a gesture haas begun. Could be used to cancel camera tracking.
+    /// Informs the delegate that a gesture has begun. Could be used to cancel camera tracking.
     func gestureBegan(for gestureType: GestureType) -> Void
 }
 
+/// A `GestureManager` manages a map's gestures, as well as their relationship to the camera manager.
 public class GestureManager: NSObject {
 
     /// The `GestureOptions` that are used to set up the required gestures on the map

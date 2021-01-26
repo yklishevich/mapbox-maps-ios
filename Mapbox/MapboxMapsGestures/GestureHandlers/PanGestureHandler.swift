@@ -1,7 +1,7 @@
 import UIKit
 
-/// The PanGestureHandler is responsible for all `pan` related infrastructure
-/// Tells the view to update itself when required
+/// The PanGestureHandler is responsible for all `pan` related infrastructure.
+/// Tells the view to update itself when required.
 internal class PanGestureHandler: GestureHandler {
 
     internal let decelerationRate = UIScrollView.DecelerationRate.normal.rawValue
