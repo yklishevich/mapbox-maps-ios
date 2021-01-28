@@ -14,7 +14,7 @@ public struct FormatOptions: ExpressionOption {
     public var fontScale: Double?
 
     /// Overrides the font stack specified by the root layout property
-    public var textFont: [String]?
+    public var textFont: Expression?
 
     /// Overrides the color specified by the root paint property.
     public var textColor: UIColor? {
@@ -37,10 +37,19 @@ public struct FormatOptions: ExpressionOption {
         case textColorInternal = "text-color"
     }
 
-    public init(fontScale: Double?, textFont: [String]?, textColor: UIColor?) {
+    public init(fontScale: Double?, textFonts: Array<String>?, textColor: UIColor?) {
         self.fontScale = fontScale
         self.textColor = textColor
-        self.textFont = textFont
+        if let firstFont = textFonts?.first {
+            self.textFont = Exp(.array) {
+                "string"
+                Exp(.literal) {
+                    [
+                        firstFont
+                    ]
+                }
+            }
+        }
     }
 }
 

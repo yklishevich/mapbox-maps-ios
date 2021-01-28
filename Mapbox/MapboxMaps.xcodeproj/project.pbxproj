@@ -358,6 +358,8 @@
 		5A9648FD2462F07B001FF05D /* MapboxCompassOrnamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9648FC2462F07B001FF05D /* MapboxCompassOrnamentView.swift */; };
 		5A9648FE246429C3001FF05D /* MapboxCompassOrnamentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9648FC2462F07B001FF05D /* MapboxCompassOrnamentView.swift */; };
 		5A96490824643BC8001FF05D /* OrnamentsLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A96490724643BC8001FF05D /* OrnamentsLocalizable.strings */; };
+		A4186D0225C33A2500A07B30 /* Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4186D0125C33A2500A07B30 /* Formatted.swift */; };
+		A4186D0325C33A2500A07B30 /* Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4186D0125C33A2500A07B30 /* Formatted.swift */; };
 		A44EE619244F7140006FE97E /* QuickZoomGestureHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44EE617244ED578006FE97E /* QuickZoomGestureHandlerTests.swift */; };
 		A4519DDB2432FF03007CF39A /* MapboxMapsStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4519DDA2432FF03007CF39A /* MapboxMapsStyleTests.swift */; };
 		A4519DDD2432FF03007CF39A /* MapboxMapsStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = A4519DCF2432FF03007CF39A /* MapboxMapsStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -988,6 +990,7 @@
 		5A3593B8247FDA4800E67344 /* LayoutPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPosition.swift; sourceTree = "<group>"; };
 		5A9648FC2462F07B001FF05D /* MapboxCompassOrnamentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxCompassOrnamentView.swift; sourceTree = "<group>"; };
 		5A96490724643BC8001FF05D /* OrnamentsLocalizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = OrnamentsLocalizable.strings; sourceTree = "<group>"; };
+		A4186D0125C33A2500A07B30 /* Formatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatted.swift; sourceTree = "<group>"; };
 		A43D7B5125196D1C00951460 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		A44EE617244ED578006FE97E /* QuickZoomGestureHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickZoomGestureHandlerTests.swift; sourceTree = "<group>"; };
 		A4519DCD2432FF03007CF39A /* MapboxMapsStyle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxMapsStyle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1552,6 +1555,7 @@
 				1FECC9DF2474519D00B63910 /* Expression.swift */,
 				0C88F22524F04D1600FC35F3 /* ExpressionBuilder.swift */,
 				0C88F22824F4223B00FC35F3 /* ExpressionOptions.swift */,
+				A4186D0125C33A2500A07B30 /* Formatted.swift */,
 				0C8D815424F6B4A800717E88 /* Value.swift */,
 				0C9DE368252C263600880CC8 /* GeoJSONSourceData.swift */,
 				0CBCF28D25409F030025F7B3 /* ResolvedImage.swift */,
@@ -3326,6 +3330,7 @@
 				0CD62F15245885B6006421D1 /* MapView.swift in Sources */,
 				0C3B1E8E24DDADD000CC29E8 /* EventsStringTokens.swift in Sources */,
 				0CD62F2024588737006421D1 /* AppleLocationProvider.swift in Sources */,
+				A4186D0225C33A2500A07B30 /* Formatted.swift in Sources */,
 				0782B010258C051900D5FCE5 /* ScreenCoordinate.swift in Sources */,
 				0782B11B258C1B9C00D5FCE5 /* Feature.swift in Sources */,
 				0782AFE6258BFD2300D5FCE5 /* CoreLocation.swift in Sources */,
@@ -3576,6 +3581,7 @@
 				0C708F6124EC70DD003CE791 /* Color.swift in Sources */,
 				0CA3DD62257AAE3B00B12C8F /* SkyLayer.swift in Sources */,
 				0C708F2A24EB1EE2003CE791 /* LocationIndicatorLayer.swift in Sources */,
+				A4186D0325C33A2500A07B30 /* Formatted.swift in Sources */,
 				0C26425624EECD14001FE2E3 /* AllExpressions.swift in Sources */,
 				0C708F2824EB1EE2003CE791 /* LineLayer.swift in Sources */,
 				0C708F2224EB1EE2003CE791 /* FillExtrusionLayer.swift in Sources */,
