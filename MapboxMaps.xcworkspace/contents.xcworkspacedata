@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Examples-SwiftUI/Examples-SwiftUI.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Mapbox/MapboxMaps.xcodeproj">
    </FileRef>
    <FileRef
