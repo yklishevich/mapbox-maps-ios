@@ -14,7 +14,7 @@ public class AnimateGeoJSONLine: UIViewController, ExampleProtocol {
     var allCoordinates: [CLLocationCoordinate2D]!
     var styleManager: StyleManager?
 
-    public var routeGeoJSONLine = (identifier: "routeLine", source: GeoJSONSource())
+    public var geoJSONLine = (identifier: "routeLine", source: GeoJSONSource())
 
     
     override public func viewDidLoad() {
@@ -46,14 +46,14 @@ public class AnimateGeoJSONLine: UIViewController, ExampleProtocol {
     func addLine() {
         let coordinate = coordinates[currentIndex]
         // Create a GeoJSON data source.
-        routeGeoJSONLine.source.data = .feature(Feature(geometry: Geometry.lineString(LineString([coordinate]))))
+        geoJSONLine.source.data = .feature(Feature(geometry: Geometry.lineString(LineString([coordinate]))))
         
-        var lineLayer = LineLayer(id: "meh")
+        var lineLayer = LineLayer(id: "line-layer")
         lineLayer.filter = Exp(.eq) {
             "$type"
             "LineString"
         }
-        lineLayer.source = routeGeoJSONLine.identifier
+        lineLayer.source = geoJSONLine.identifier
         lineLayer.paint?.lineColor = .constant(ColorRepresentable(color: UIColor.red))
         
         let lowZoomWidth = 5
@@ -72,7 +72,7 @@ public class AnimateGeoJSONLine: UIViewController, ExampleProtocol {
         lineLayer.layout?.lineJoin = .round
         
         // Add the lineLayer to the map.
-        self.mapView.style.addSource(source: routeGeoJSONLine.source, identifier: routeGeoJSONLine.identifier)
+        self.mapView.style.addSource(source: geoJSONLine.source, identifier: geoJSONLine.identifier)
         self.mapView.style.addLayer(layer: lineLayer)
         
     }
@@ -81,7 +81,7 @@ public class AnimateGeoJSONLine: UIViewController, ExampleProtocol {
         currentIndex = 1
         
         // Start a timer that will simulate adding points to our polyline. This could also represent coordinates being added to our polyline from another source, such as a CLLocationManagerDelegate.
-        timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.10, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
     }
     
     @objc func tick() {
@@ -105,9 +105,9 @@ public class AnimateGeoJSONLine: UIViewController, ExampleProtocol {
         let mutableCoordinates = coordinates
 
         // Identify the new coordinate to animate to
-        routeGeoJSONLine.source.data = .feature(Feature(LineString(mutableCoordinates)))
+        geoJSONLine.source.data = .feature(Feature(LineString(mutableCoordinates)))
         let geoJSON = Feature.init(geometry: Geometry.lineString(LineString(mutableCoordinates)))
-        _ = self.mapView.style.updateGeoJSON(for: self.routeGeoJSONLine.identifier,
+        _ = self.mapView.style.updateGeoJSON(for: self.geoJSONLine.identifier,
                                                                    with: geoJSON)
     }
     
