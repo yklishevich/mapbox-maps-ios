@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0706C4A625B1181A008733C0 /* TerrainExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706C4A525B1181A008733C0 /* TerrainExample.swift */; };
 		073475D725AFAE520049B0B8 /* CustomLayerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073475D625AFAE520049B0B8 /* CustomLayerExample.swift */; };
+		075C163F25C3735B00ADCFB3 /* AnimateGeoJSONLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075C163E25C3735B00ADCFB3 /* AnimateGeoJSONLine.swift */; };
 		077C4EFA252F7E89007636F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 077C4EF8252F7E89007636F1 /* LaunchScreen.storyboard */; };
 		077C4F05252F7E89007636F1 /* ExamplesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077C4F04252F7E89007636F1 /* ExamplesTests.swift */; };
 		077C4F10252F7E89007636F1 /* ExamplesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077C4F0F252F7E89007636F1 /* ExamplesUITests.swift */; };
@@ -106,6 +107,7 @@
 		0746C14D252FA9D4001638BD /* Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Examples.swift; sourceTree = "<group>"; };
 		0746C152252FAA03001638BD /* UIViewController+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Children.swift"; sourceTree = "<group>"; };
 		0746C15F252FADE4001638BD /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
+		075C163E25C3735B00ADCFB3 /* AnimateGeoJSONLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimateGeoJSONLine.swift; path = "Examples/All Examples/AnimateGeoJSONLine.swift"; sourceTree = SOURCE_ROOT; };
 		0773528E25438CCA00B48DB6 /* SelectAnnotationExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAnnotationExample.swift; sourceTree = "<group>"; };
 		077C4EEA252F7E88007636F1 /* Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		077C4EED252F7E88007636F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 		07B071D12547CF50007F2865 /* Sample Data */ = {
 			isa = PBXGroup;
 			children = (
+				075C163E25C3735B00ADCFB3 /* AnimateGeoJSONLine.swift */,
 				07B071D22547CFC3007F2865 /* GeoJSONSourceExample.geojson */,
 				0CE8ED87258928200066E56C /* race_car_model.gltf */,
 				0C52BA9B25AFB5940054ECA8 /* arrow.gltf */,
@@ -553,6 +556,7 @@
 				CADCF72D2584990E0065C51B /* GeoJSONSourceExample.swift in Sources */,
 				CADCF72E2584990E0065C51B /* MapViewExample.swift in Sources */,
 				CADCF73F258499240065C51B /* SceneDelegate.swift in Sources */,
+				075C163F25C3735B00ADCFB3 /* AnimateGeoJSONLine.swift in Sources */,
 				CADCF736258499170065C51B /* ExampleTableViewController.swift in Sources */,
 				A4211CE62592549900D215B4 /* RestrictCoordinateBoundsExample.swift in Sources */,
 				0C52BA9825AF8C880054ECA8 /* PuckModelLayerExample.swift in Sources */,
