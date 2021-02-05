@@ -8,7 +8,58 @@ extension ExpressionOption {
     }
 }
 
-public struct FormatOptions: ExpressionOption {
+public struct Formatted: Codable, Equatable {
+    var formattedSections: [FormattedSection]?
+}
+
+public struct FormattedSection: Codable, Equatable {
+
+    public enum Input: Codable, Equatable {
+        case string(String)
+        case expression(Exp) // image expression
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+
+            if let validString = try? container.decode(String.self) {
+                self = .string(validString)
+            }
+
+            if let validExp = try? container.decode(Expression.self) {
+                self = .expression(validExp)
+            }
+
+            let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                debugDescription: "Failed to decode FormattedSection")
+            throw DecodingError.dataCorrupted(context)
+        }
+
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+
+            switch self {
+            case .expression(let exp):
+                try container.encode(exp)
+            case .string(let string):
+                try container.encode(string)
+            }
+        }
+    }
+
+    public let input: Input
+    public let options: FormatOptions?
+
+    init(input: Input, options: FormatOptions? = nil) {
+        self.input = input
+        self.options = options
+    }
+
+    public static func == (lhs: FormattedSection, rhs: FormattedSection) -> Bool {
+        return lhs.input == rhs.input && lhs.options == rhs.options
+    }
+}
+
+public struct FormatOptions: ExpressionOption, Equatable {
 
     /// Applies a scaling factor on text-size as specified by the root layout property.
     public var fontScale: Double?
@@ -18,9 +69,6 @@ public struct FormatOptions: ExpressionOption {
 
     /// Overrides the color specified by the root paint property.
     public var textColor: ColorRepresentable?
-
-    /// Internal facing, serializable representative of `textColor`
-    private var textColorInternal: ColorRepresentable?
 
     internal enum CodingKeys: String, CodingKey {
         case fontScale = "font-scale"
@@ -36,6 +84,8 @@ public struct FormatOptions: ExpressionOption {
             self.textColor = ColorRepresentable(color: textColor)
         }
     }
+
+
 }
 
 public struct NumberFormatOptions: ExpressionOption {

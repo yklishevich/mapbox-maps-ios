@@ -27,6 +27,7 @@ public class DebugViewController: UIViewController {
         self.mapView = MapView(with: view.bounds, resourceOptions: resourceOptions)
         mapView.update { (mapOptions) in
             mapOptions.location.showUserLocation = true
+            mapOptions.ornaments.showsCompass = false
         }
 
         self.view.addSubview(mapView)

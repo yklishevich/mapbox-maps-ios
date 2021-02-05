@@ -31,73 +31,6 @@ class SymbolLayerIntegrationTests: MapViewIntegrationTestCase {
 
             var layer = SymbolLayer(id: "test-id")
             layer.source = "some-source"
-            layer.sourceLayer = nil
-            layer.minZoom = 10.0
-            layer.maxZoom = 20.0
-            layer.layout?.visibility = .visible
-            layer.layout?.iconAllowOverlap = Value<Bool>.testConstantValue()
-            layer.layout?.iconAnchor = IconAnchor.testConstantValue()
-            layer.layout?.iconIgnorePlacement = Value<Bool>.testConstantValue()
-            layer.layout?.iconImage = Value<ResolvedImage>.testConstantValue()
-            layer.layout?.iconKeepUpright = Value<Bool>.testConstantValue()
-            layer.layout?.iconOptional = Value<Bool>.testConstantValue()
-            layer.layout?.iconPadding = Value<Double>.testConstantValue()
-            layer.layout?.iconPitchAlignment = IconPitchAlignment.testConstantValue()
-            layer.layout?.iconRotate = Value<Double>.testConstantValue()
-            layer.layout?.iconRotationAlignment = IconRotationAlignment.testConstantValue()
-            layer.layout?.iconSize = Value<Double>.testConstantValue()
-            layer.layout?.iconTextFit = IconTextFit.testConstantValue()
-            layer.layout?.symbolAvoidEdges = Value<Bool>.testConstantValue()
-            layer.layout?.symbolPlacement = SymbolPlacement.testConstantValue()
-            layer.layout?.symbolSortKey = Value<Double>.testConstantValue()
-            layer.layout?.symbolSpacing = Value<Double>.testConstantValue()
-            layer.layout?.symbolZOrder = SymbolZOrder.testConstantValue()
-            layer.layout?.textAllowOverlap = Value<Bool>.testConstantValue()
-            layer.layout?.textAnchor = TextAnchor.testConstantValue()
-//            layer.layout?.textField = Value<String>.testConstantValue()
-            layer.layout?.textFont = Value<[String]>.testConstantValue()
-            layer.layout?.textIgnorePlacement = Value<Bool>.testConstantValue()
-            layer.layout?.textJustify = TextJustify.testConstantValue()
-            layer.layout?.textKeepUpright = Value<Bool>.testConstantValue()
-            layer.layout?.textLetterSpacing = Value<Double>.testConstantValue()
-            layer.layout?.textLineHeight = Value<Double>.testConstantValue()
-            layer.layout?.textMaxAngle = Value<Double>.testConstantValue()
-            layer.layout?.textMaxWidth = Value<Double>.testConstantValue()
-            layer.layout?.textOptional = Value<Bool>.testConstantValue()
-            layer.layout?.textPadding = Value<Double>.testConstantValue()
-            layer.layout?.textPitchAlignment = TextPitchAlignment.testConstantValue()
-            layer.layout?.textRadialOffset = Value<Double>.testConstantValue()
-            layer.layout?.textRotate = Value<Double>.testConstantValue()
-            layer.layout?.textRotationAlignment = TextRotationAlignment.testConstantValue()
-            layer.layout?.textSize = Value<Double>.testConstantValue()
-            layer.layout?.textTransform = TextTransform.testConstantValue()
-            layer.layout?.textVariableAnchor = [TextAnchor].testConstantValue()
-            layer.layout?.textWritingMode = [TextWritingMode].testConstantValue()
-
-            layer.paint?.iconColor = Value<ColorRepresentable>.testConstantValue()
-            layer.paint?.iconColorTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.iconHaloBlur = Value<Double>.testConstantValue()
-            layer.paint?.iconHaloBlurTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.iconHaloColor = Value<ColorRepresentable>.testConstantValue()
-            layer.paint?.iconHaloColorTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.iconHaloWidth = Value<Double>.testConstantValue()
-            layer.paint?.iconHaloWidthTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.iconOpacity = Value<Double>.testConstantValue()
-            layer.paint?.iconOpacityTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.iconTranslateTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.iconTranslateAnchor = IconTranslateAnchor.testConstantValue()
-            layer.paint?.textColor = Value<ColorRepresentable>.testConstantValue()
-            layer.paint?.textColorTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.textHaloBlur = Value<Double>.testConstantValue()
-            layer.paint?.textHaloBlurTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.textHaloColor = Value<ColorRepresentable>.testConstantValue()
-            layer.paint?.textHaloColorTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.textHaloWidth = Value<Double>.testConstantValue()
-            layer.paint?.textHaloWidthTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.textOpacity = Value<Double>.testConstantValue()
-            layer.paint?.textOpacityTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.textTranslateTransition = StyleTransition(duration: 10.0, delay: 10.0)
-            layer.paint?.textTranslateAnchor = TextTranslateAnchor.testConstantValue()
 
             // Add the layer
             let addResult = style.addLayer(layer: layer)
@@ -109,11 +42,45 @@ class SymbolLayerIntegrationTests: MapViewIntegrationTestCase {
                     XCTFail("Failed to add SymbolLayer because of error: \(error)")
             }
 
+            let setStyleExpected = try! style.styleManager.setStyleLayerPropertyForLayerId("test-id", property: "text-field", value: [
+                "format",
+                "foo",
+                [
+                    "font-scale" : 1.2,
+                    "text-font" : [ "literal",
+                                    [
+                                      "Arial"
+                                    ]
+                                  ],
+                    "text-color" : ColorRepresentable(color: .red).colorRepresentation
+                ],
+                "bar",
+                [
+                    "font-scale" : 0.8,
+                    "text-font" : [ "literal",
+                                    [
+                                        "Arial"
+                                    ]
+                                  ],
+                    "text-color" : ColorRepresentable(color: .red).colorRepresentation
+                ]
+            ])
+
+            if setStyleExpected.isError() {
+                fatalError("** set style expected is error: \(setStyleExpected.error)")
+            } else {
+                print("** set style expected is success: \(setStyleExpected.value)")
+            }
+
+            let values = try! style.styleManager.getStyleLayerProperties(forLayerId: "test-id")
+
+            print(values.value)
+
             // Retrieve the layer
             let retrieveResult = style.getLayer(with: "test-id", type: SymbolLayer.self)
 
             switch (retrieveResult) {
-                case .success(_):
+                case .success(let layer):
                     successfullyRetrievedLayerExpectation.fulfill()    
                 case .failure(let error):
                     XCTFail("Failed to retreive SymbolLayer because of error: \(error)")   
