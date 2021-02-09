@@ -33,7 +33,7 @@ public extension MapEvents {
                 self = .mapLoadingError
             case MapEvents.mapIdle:
                 self = .mapIdle
-            case MapEvents.styleLoadingFinished:
+            case MapEvents.styleFullyLoaded:
                 self = .styleLoadingFinished
             case MapEvents.styleImageMissing:
                 self = .styleImageMissing
@@ -73,7 +73,7 @@ public extension MapEvents {
             case .mapIdle:
                 return MapEvents.mapIdle
             case .styleLoadingFinished:
-                return MapEvents.styleLoadingFinished
+                return MapEvents.styleFullyLoaded
             case .styleImageMissing:
                 return MapEvents.styleImageMissing
             case .styleImageRemoveUnused:
