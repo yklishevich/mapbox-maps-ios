@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jhG-1A-c8j">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jhG-1A-c8j">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,22 +14,37 @@
             <objects>
                 <viewController storyboardIdentifier="viewControllerId" id="BYZ-38-t0r" customClass="DebugViewController" customModule="DebugApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5t-0g-mHw" customClass="TimeFrameGraph" customModule="DebugApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="721" width="414" height="175"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="F5t-0g-mHw" secondAttribute="bottom" constant="-34" id="KOg-Ef-NpG"/>
+                            <constraint firstItem="F5t-0g-mHw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MCx-8F-zhq"/>
+                            <constraint firstItem="F5t-0g-mHw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="677" id="V4m-ni-rdM"/>
+                            <constraint firstItem="F5t-0g-mHw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uSl-9B-ocg"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="frameGraph" destination="F5t-0g-mHw" id="t0d-pS-f3p"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="60"/>
+            <point key="canvasLocation" x="137.68115942028987" y="59.598214285714285"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="ycw-EK-dSb">
             <objects>
                 <viewController id="jhG-1A-c8j" customClass="MainViewController" customModule="DebugApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N0H-9t-sTA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="MdB-sj-o6k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

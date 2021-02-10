@@ -10,6 +10,8 @@ import Turf
 
 public class DebugViewController: UIViewController {
 
+    @IBOutlet weak var frameGraph: TimeFrameGraph!
+    internal var frameGraphEnabled: Bool = false
     internal var mapView: MapView!
 
     var resourceOptions: ResourceOptions {
@@ -30,5 +32,18 @@ public class DebugViewController: UIViewController {
         }
 
         self.view.addSubview(mapView)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleBarTap))
+        self.mapView.addGestureRecognizer(tap)
+
+        if self.frameGraphEnabled {
+            mapView.on(.renderFrameFinished) { (status) in
+//                self.frameGraph.updatePath(with: mapView.__map.tim)
+            }
+        }
+    }
+
+    @objc func handleBarTap() {
+        print("boop")
     }
 }
