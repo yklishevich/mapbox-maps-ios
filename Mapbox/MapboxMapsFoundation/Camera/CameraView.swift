@@ -60,16 +60,15 @@ public class CameraView: UIView {
         }
     }
 
-    private var bearingStore: CGFloat = 36000.0
+
 
     /// The camera's bearing. Animatable.
     @objc dynamic public var bearing: CGFloat {
         get {
-            return isActive ? bearingStore : CGFloat(mapView.cameraOptions.bearing!)
+            return CGFloat(mapView.cameraOptions.bearing!)
         }
 
         set {
-            bearingStore = newValue
             layer.cornerRadius = CGFloat(newValue)
         }
     }
@@ -192,7 +191,12 @@ public class CameraView: UIView {
         camera.zoom = CGFloat(localZoomLevel)
         camera.bearing = localBearing
         camera.pitch = localPitch
-        try! self.mapView.__map.jumpTo(forCamera: camera)
+
+
+        if let _ = self.layer.animationKeys() {
+//            print("layer.presentation: \(layer.presentation()), layer.animationKeys: \(layer.animationKeys()) ")
+            try! self.mapView.__map.jumpTo(forCamera: camera)
+        }
     }
 
     private func insetsForScreenCoordinate(_ screenCoordinate: CGPoint, in view: UIView) -> UIEdgeInsets {

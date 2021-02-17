@@ -428,7 +428,7 @@ public class CameraManager {
         let animation = {
             // IMPORTANT: To trigger an immediate update, cameraView properties that are structs
             // should always be animated using the camera layer instead.
-            if let cameraLayer = mapView.cameraView as? CameraView {
+            if let cameraLayer = mapView.cameraView.layer as? CameraLayer {
                 // Check whether each value has been updated before adding to the block
                 if offset != nil {
                     cameraLayer.centerCoordinateLatitude = CGFloat(centerCoordinate.latitude)
