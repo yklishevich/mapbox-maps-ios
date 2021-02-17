@@ -374,7 +374,7 @@ extension GestureManager: GestureHandlerDelegate {
         guard let mapView = cameraManager.mapView else {
             return 0
         }
-        return (mapView.cameraView.bearing * .pi) / 180.0 * -1
+        return CGFloat((mapView.cameraView.bearing * .pi) / 180.0 * -1)
     }
 
     internal func rotationChanged(with changedAngle: CGFloat, and anchor: CGPoint, and pinchScale: CGFloat) {

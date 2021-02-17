@@ -131,7 +131,7 @@ open class BaseMapView: UIView, MapClient, MBMMetalViewProvider {
         let events = MapEvents.EventKind.allCases.map({ $0.rawValue })
         try! __map.subscribe(for: observerConcrete, events: events)
 
-        self.cameraView = CameraView(frame: frame, map: __map)
+        self.cameraView = CameraView(mapView: self)
         self.addSubview(cameraView)
 
         NSLayoutConstraint.activate([ self.cameraView.leftAnchor.constraint(equalTo: self.leftAnchor),

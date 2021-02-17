@@ -1,22 +1,14 @@
 import UIKit
 
-public protocol CameraViewDelegate: AnyObject {
-    /// A method that is called whenever the cameraView is manipulated
-    func cameraViewManipulated(for cameraView: CameraView)
+fileprivate extension BaseMapView {
+    var cameraOptions : CameraOptions {
+        let options = try! self.__map.getCameraOptions(forPadding: nil)
+        return options
+    }
 }
 
 /// A view that represents a camera view port.
 public class CameraView: UIView {
-
-    public override class var layerClass: AnyClass {
-        return CameraLayer.self
-    }
-
-    private var cameraLayer: CameraLayer {
-        // swiftlint:disable force_cast
-        return self.layer as! CameraLayer
-        // swiftlint:enable force_cast
-    }
 
     public var camera: CameraOptions {
         get {
@@ -60,142 +52,155 @@ public class CameraView: UIView {
     /// The camera's zoom. Animatable.
     @objc dynamic public var zoom: CGFloat {
         get {
-            return cameraLayer.zoom
+            return CGFloat(mapView.cameraOptions.zoom!)
         }
 
         set {
-            cameraLayer.zoom = newValue
+            layer.opacity = Float(newValue)
         }
     }
+
+    private var bearingStore: CGFloat = 36000.0
 
     /// The camera's bearing. Animatable.
     @objc dynamic public var bearing: CGFloat {
         get {
-            return cameraLayer.bearing
+            return isActive ? bearingStore : CGFloat(mapView.cameraOptions.bearing!)
         }
 
         set {
-            cameraLayer.bearing = newValue
-        }
-    }
-
-    /// The camera's anchor. Not Animatable.
-    /// The anchor will be updated in the next rendering frame.
-    @objc dynamic public var anchor: CGPoint {
-        get {
-            return cameraLayer.anchor
-        }
-
-        set {
-            cameraLayer.anchor = newValue
-        }
-    }
-
-    /// The camera's padding around the interior of the view that affects the frame
-    /// of reference for centerCoordinate. Not Animatable.
-    /// The padding will be updated in the next rendering frame.
-    @objc dynamic public var padding: UIEdgeInsets {
-        get {
-            return cameraLayer.padding
-        }
-
-        set {
-            cameraLayer.padding = newValue
+            bearingStore = newValue
+            layer.cornerRadius = CGFloat(newValue)
         }
     }
 
     /// Coordinate at the center of the camera. Animatable.
     @objc dynamic public var centerCoordinate: CLLocationCoordinate2D {
         get {
-            let latitude = CLLocationDegrees(cameraLayer.centerCoordinateLatitude)
-            let longitude = CLLocationDegrees(cameraLayer.centerCoordinateLongitude)
-            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            mapView.cameraOptions.center!
         }
 
         set {
-            cameraLayer.centerCoordinateLatitude = CGFloat(newValue.latitude)
-            cameraLayer.centerCoordinateLongitude = CGFloat(newValue.longitude)
+            layer.position = CGPoint(x: newValue.longitude, y: newValue.latitude)
         }
+    }
 
+
+    @objc dynamic public var padding: UIEdgeInsets {
+        get {
+            mapView.cameraOptions.padding ?? UIEdgeInsets.zero
+        }
+        set {
+            // TODO: figure out how to handle padding
+        }
     }
 
     /// The camera's pitch. Animatable.
     @objc dynamic public var pitch: CGFloat {
         get {
-            return cameraLayer.pitch
+            return mapView.cameraOptions.pitch!
         }
 
         set {
-            cameraLayer.pitch = newValue
+            layer.bounds = CGRect(x: 0, y: 0, width: newValue, height: 0)
         }
     }
 
-    @objc public var visibleCoordinateBounds: CoordinateBounds {
-        let padding = self.padding.toMBXEdgeInsetsValue()
-        let currentCamera = try! map.getCameraOptions(forPadding: padding)
-        return try! map.coordinateBoundsForCamera(forCamera: currentCamera)
-    }
-
-    private var map: Map
-
-    public weak var delegate: CameraViewDelegate?
-
-    public init(frame: CGRect, map: Map) {
-        self.map = map
-
-        super.init(frame: frame)
-
-        // Sync default values from renderer
-        let defaultCameraOptions = try! self.map.getCameraOptions(forPadding: nil)
-        self.zoom = defaultCameraOptions.zoom ?? 0.0
-        self.bearing = CGFloat(defaultCameraOptions.bearing ?? 0.0)
-        self.anchor = defaultCameraOptions.anchor ?? .zero
-        self.pitch = defaultCameraOptions.pitch ?? 0.0
-        self.padding = defaultCameraOptions.padding ?? .zero
-
-        if let coordinate = defaultCameraOptions.center {
-            self.centerCoordinate = coordinate
+    /// The screen coordinate that the map rotates, pitches and zooms around. Setting this also affects the horizontal vanishing point when pitched. Animatable.
+    @objc dynamic public var anchor: CGPoint {
+        get {
+            return layer.presentation()?.anchorPoint ?? .zero
         }
 
-        self.translatesAutoresizingMaskIntoConstraints = false
+        set {
+            layer.anchorPoint = newValue
+        }
     }
 
-    public convenience init(frame: CGRect, map: Map, camera: CameraOptions) {
-        self.init(frame: frame, map: map)
-        self.camera = camera
+    private var localCenterCoordinate: CLLocationCoordinate2D {
+        let proxyCoord = layer.presentation()?.position ?? layer.position
+        return CLLocationCoordinate2D(latitude: CLLocationDegrees(proxyCoord.y), longitude: CLLocationDegrees(proxyCoord.x))
+    }
+
+    private var localZoomLevel: Double {
+        return Double(layer.presentation()?.opacity ?? layer.opacity)
+    }
+
+    private var localBearing: CLLocationDirection {
+        return CLLocationDirection(layer.presentation()?.cornerRadius ?? layer.cornerRadius)
+    }
+
+    private var localPitch: CGFloat {
+        return layer.presentation()?.bounds.width ?? layer.bounds.width
+    }
+
+    private var localAnchorPoint: CGPoint {
+        return layer.presentation()?.anchorPoint ?? layer.anchorPoint
+    }
+
+    var isActive = false {
+        didSet {
+            setFromValuesWithMapView()
+        }
+    }
+
+    private unowned var mapView: BaseMapView!
+    private var displayLink: CADisplayLink!
+
+
+    init(mapView: BaseMapView, edgeInsets: UIEdgeInsets = .zero) {
+        self.mapView = mapView
+        super.init(frame: .zero)
+
+        self.isHidden = true
+        self.isUserInteractionEnabled = false
+
+        // Sync default values from MBXMap
+        centerAnchorPointInside(edgeInsets: edgeInsets)
+        setFromValuesWithMapView()
+
+        displayLink = CADisplayLink(target: self, selector: #selector(update))
+        displayLink.add(to: .current, forMode: RunLoop.Mode.common)
     }
 
     internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func display(_ layer: CALayer) {
+    deinit {
+        displayLink.remove(from: .current, forMode: RunLoop.Mode.common)
+        displayLink = nil
+    }
 
-        let displayLayer = layer.presentation() ?? layer
+    private func setFromValuesWithMapView() {
+        self.zoom = CGFloat(mapView.cameraOptions.zoom ?? 0)
+        self.bearing = CGFloat(mapView.cameraOptions.bearing!) ?? 0 + (isActive ? 36000.0 : 0.0)
+        self.pitch = CGFloat(mapView.cameraOptions.pitch ?? 0)
+        self.centerCoordinate = mapView.coordinate(for: localAnchorPoint)
+    }
 
-        if let cameraLayer = displayLayer as? CameraLayer {
+    func centerAnchorPointInside(edgeInsets: UIEdgeInsets) {
+        let x = (self.mapView.bounds.size.width - edgeInsets.left - edgeInsets.right) / 2.0 + edgeInsets.left
+        let y = (self.mapView.bounds.size.height - edgeInsets.top - edgeInsets.bottom) / 2.0 + edgeInsets.top
+        anchor = CGPoint(x: x, y: y)
+    }
 
-            let zoom = NSNumber(value: Double(cameraLayer.zoom))
-            let bearing = NSNumber(value: Double(cameraLayer.bearing))
-            let anchor = ScreenCoordinate(x: Double(cameraLayer.anchor.x),
-                                          y: Double(cameraLayer.anchor.y))
+    @objc private func update() {
 
-            let padding = cameraLayer.padding.toMBXEdgeInsetsValue()
-            let pitch = NSNumber(value: Double(cameraLayer.pitch))
+        let camera = CameraOptions()
+        camera.center = localCenterCoordinate
+        camera.zoom = CGFloat(localZoomLevel)
+        camera.bearing = localBearing
+        camera.pitch = localPitch
+        try! self.mapView.__map.jumpTo(forCamera: camera)
+    }
 
-            let center = CLLocation(latitude: CLLocationDegrees(cameraLayer.centerCoordinateLatitude),
-                                    longitude: CLLocationDegrees(cameraLayer.centerCoordinateLongitude))
-
-            let updatedCameraOptions = CameraOptions(__center: center,
-                                                     padding: padding,
-                                                     anchor: anchor,
-                                                     zoom: zoom,
-                                                     bearing: bearing,
-                                                     pitch: pitch)
-
-            try! self.map.jumpTo(forCamera: updatedCameraOptions)
-            self.delegate?.cameraViewManipulated(for: self)
-        }
+    private func insetsForScreenCoordinate(_ screenCoordinate: CGPoint, in view: UIView) -> UIEdgeInsets {
+        let top = screenCoordinate.y
+        let left = screenCoordinate.x
+        let bottom = view.bounds.size.height - top
+        let right = view.bounds.size.width - left
+        return UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     }
 }
 
