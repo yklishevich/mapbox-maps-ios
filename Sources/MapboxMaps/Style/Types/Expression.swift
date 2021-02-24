@@ -130,6 +130,7 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
         case string(String)
         case boolean(Bool)
         case array([Double])
+        case stringArray(Array<String>)
         case option(ExpressionOption)
         case null
         case expression(Expression)
@@ -150,6 +151,8 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
                 return "\(option)"
             case .array(let array):
                 return "\(array)"
+            case .stringArray(let array):
+                return "\(array)"
             }
         }
 
@@ -168,6 +171,8 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
             case (.expression(let lhsExpression), .expression(let rhsExpression)):
                 return lhsExpression == rhsExpression
             case (.array(let lhsArray), .array(let rhsArray)):
+                return lhsArray == rhsArray
+            case (.stringArray(let lhsArray), .stringArray(let rhsArray)):
                 return lhsArray == rhsArray
             default:
                 return false
@@ -204,6 +209,8 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
 
             case .array(let array):
                 try container.encode(array)
+            case .stringArray(let stringArray):
+                try container.encode(stringArray)
             }
         }
 
@@ -246,6 +253,12 @@ public struct Expression: Codable, CustomStringConvertible, Equatable {
             if let validArray = try? container.decode([Double].self) {
                 self = .array(validArray)
             }
+
+            if let validStringArray = try? container.decode([String].self) {
+                self = .stringArray(validStringArray)
+            }
+
+
 
             let context = DecodingError.Context(codingPath: decoder.codingPath,
                                                 debugDescription: "Failed to decode ExpressionArgument")

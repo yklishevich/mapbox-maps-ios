@@ -50,11 +50,23 @@ extension Bool: ValidExpressionArgument {
     }
 }
 
-extension Array: ValidExpressionArgument where Element == Double {
+extension Array: ValidExpressionArgument {
     public var expressionElements: [Expression.Element] {
-        return [.argument(.array(self))]
+        if let self = self as? [Double] {
+            return [.argument(.array(self))]
+        } else if let self = self as? [String] {
+            return [.argument(.stringArray(self))]
+        } else {
+            // Do something if neither
+            return []
+        }
     }
 }
+//extension Array: ValidExpressionArgument where Element == Double {
+//    public var expressionElements: [Expression.Element] {
+//        return [.argument(.array(self))]
+//    }
+//}
 
 extension Expression.Element: ValidExpressionArgument {
     public var expressionElements: [Expression.Element] {

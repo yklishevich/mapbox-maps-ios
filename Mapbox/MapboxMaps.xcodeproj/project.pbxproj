@@ -400,6 +400,8 @@
 		A4519DDD2432FF03007CF39A /* MapboxMapsStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = A4519DCF2432FF03007CF39A /* MapboxMapsStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A4519DE52432FF14007CF39A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4519DE42432FF14007CF39A /* Style.swift */; };
 		A4519DE724330083007CF39A /* MapboxStyleURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4519DE624330083007CF39A /* MapboxStyleURL.swift */; };
+		A485690625E6BA8700565F60 /* Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = A485690525E6BA8700565F60 /* Formatted.swift */; };
+		A485690725E6BA8700565F60 /* Formatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = A485690525E6BA8700565F60 /* Formatted.swift */; };
 		A4C0116F25664BD400787494 /* MapboxMapsFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F11C10F2421B05600F8397B /* MapboxMapsFoundation.framework */; };
 		A4C786612440EAF0000CEF1E /* StyleURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C786602440EAF0000CEF1E /* StyleURLTests.swift */; };
 		A4FE8893255F365B00FBF117 /* MapboxMapsCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8DA47243BE4A400A19318 /* MapboxMapsCameraTests.swift */; };
@@ -1102,6 +1104,7 @@
 		A4519DDC2432FF03007CF39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4519DE42432FF14007CF39A /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		A4519DE624330083007CF39A /* MapboxStyleURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxStyleURL.swift; sourceTree = "<group>"; };
+		A485690525E6BA8700565F60 /* Formatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatted.swift; sourceTree = "<group>"; };
 		A4BDC0CC244A23EB00AA9B64 /* QuickZoomGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickZoomGestureHandler.swift; sourceTree = "<group>"; };
 		A4C786602440EAF0000CEF1E /* StyleURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleURLTests.swift; sourceTree = "<group>"; };
 		A4E82010255A10A100926E90 /* MapboxAnimationGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxAnimationGroupTests.swift; sourceTree = "<group>"; };
@@ -1674,6 +1677,7 @@
 				0C88F22524F04D1600FC35F3 /* ExpressionBuilder.swift */,
 				0C88F22824F4223B00FC35F3 /* ExpressionOptions.swift */,
 				0C8D815424F6B4A800717E88 /* Value.swift */,
+				A485690525E6BA8700565F60 /* Formatted.swift */,
 				0C9DE368252C263600880CC8 /* GeoJSONSourceData.swift */,
 				0CBCF28D25409F030025F7B3 /* ResolvedImage.swift */,
 			);
@@ -3519,6 +3523,7 @@
 				07729A592462461800440187 /* CameraOptions.swift in Sources */,
 				0CD62F1F24588734006421D1 /* LocationProviderDelegate.swift in Sources */,
 				0C708F5624EB24B1003CE791 /* SourceProperties.swift in Sources */,
+				A485690625E6BA8700565F60 /* Formatted.swift in Sources */,
 				0C95DBBB257A92F90018252C /* BaseMapView.swift in Sources */,
 				0CF0C42924EB1779000DC118 /* Enums.swift in Sources */,
 				0CD62F06245884FD006421D1 /* TapGestureHandler.swift in Sources */,
@@ -3827,6 +3832,7 @@
 			files = (
 				0C55010C2476D83A00AE019A /* Light.swift in Sources */,
 				0C708F5424EB23C7003CE791 /* RasterSource.swift in Sources */,
+				A485690725E6BA8700565F60 /* Formatted.swift in Sources */,
 				A4519DE724330083007CF39A /* MapboxStyleURL.swift in Sources */,
 				0C708F3524EB1EFA003CE791 /* Layers.swift in Sources */,
 				0C708F4C24EB23C7003CE791 /* ImageSource.swift in Sources */,
