@@ -1,7 +1,6 @@
 import Foundation
 import CoreLocation
 import CoreGraphics
-import MapboxCoreMaps
 
 // MARK: - ScreenCoordinate
 

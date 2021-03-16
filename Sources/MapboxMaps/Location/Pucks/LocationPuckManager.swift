@@ -1,5 +1,4 @@
 import CoreLocation
-import MapboxCoreMaps
 import UIKit
 
 #if canImport(MapboxMapsFoundation)

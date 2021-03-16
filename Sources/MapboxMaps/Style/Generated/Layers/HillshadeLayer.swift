@@ -1,8 +1,6 @@
 // This file is generated.
 
 import Foundation
-import MapboxCoreMaps
-import MapboxCommon
 
 /**
  * Client-side hillshading visualization based on DEM data. Currently, the implementation only supports Mapbox Terrain RGB and Mapzen Terrarium tiles.

@@ -1,8 +1,6 @@
 // This file is generated.
 
 import Foundation
-import MapboxCoreMaps
-import MapboxCommon
 
 /**
  * An extruded (3D) polygon.

@@ -1,8 +1,6 @@
 // This file is generated.
 
 import UIKit
-import MapboxCoreMaps
-import MapboxCommon
 
 /**
  * The global light source.

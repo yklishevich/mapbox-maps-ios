@@ -1,8 +1,6 @@
 // This file is generated.
 
 import Foundation
-import MapboxCoreMaps
-import MapboxCommon
 
 /**
  * A spherical dome around the map that is always rendered behind all other layers.

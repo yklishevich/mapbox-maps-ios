@@ -1,8 +1,6 @@
 // This file is generated.
 
 import Foundation
-import MapboxCoreMaps
-import MapboxCommon
 
 /**
  * A filled polygon with an optional stroked border.

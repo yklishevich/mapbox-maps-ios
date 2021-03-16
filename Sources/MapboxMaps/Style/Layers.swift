@@ -1,5 +1,4 @@
 import Foundation
-import MapboxCoreMaps
 
 /// Layer rendering types
 public enum LayerType: String, Codable {

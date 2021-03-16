@@ -1,6 +1,4 @@
 import UIKit
-import MapboxCoreMaps
-import MapboxCommon
 
 #if canImport(MapboxMapsFoundation)
 import MapboxMapsFoundation

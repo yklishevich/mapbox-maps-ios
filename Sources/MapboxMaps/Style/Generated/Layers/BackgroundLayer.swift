@@ -1,8 +1,6 @@
 // This file is generated.
 
 import Foundation
-import MapboxCoreMaps
-import MapboxCommon
 
 /**
  * The background color or pattern of the map.

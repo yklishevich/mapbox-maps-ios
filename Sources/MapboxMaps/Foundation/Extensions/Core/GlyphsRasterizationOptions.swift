@@ -1,5 +1,4 @@
 import Foundation
-import MapboxCoreMaps
 
 public extension GlyphsRasterizationOptions {
 

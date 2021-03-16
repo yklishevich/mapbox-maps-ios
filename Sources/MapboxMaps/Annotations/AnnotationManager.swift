@@ -1,7 +1,5 @@
 import Foundation
 import UIKit
-import MapboxCoreMaps
-import MapboxCommon
 import Turf
 import CoreLocation
 
