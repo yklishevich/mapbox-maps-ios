@@ -567,7 +567,7 @@ public class CameraManager {
                 return flyTo.zoom(at: number.doubleValue)
             }
 
-            let zoomAnimation = CAKeyframeAnimation(keyPath: "zoom")
+            let zoomAnimation = CAKeyframeAnimation(keyPath: "opacity")
             zoomAnimation.keyTimes              = keyTimes
             zoomAnimation.values                = zoomLevels
             zoomAnimation.duration              = time
@@ -592,7 +592,7 @@ public class CameraManager {
                 $0.longitude
             }
 
-            let centerAnimationLatitude = CAKeyframeAnimation(keyPath: "centerCoordinateLatitude")
+            let centerAnimationLatitude = CAKeyframeAnimation(keyPath: "position.y")
             centerAnimationLatitude.keyTimes              = keyTimes
             centerAnimationLatitude.values                = latitudes
             centerAnimationLatitude.duration              = time
@@ -601,7 +601,7 @@ public class CameraManager {
             centerAnimationLatitude.isRemovedOnCompletion = false
             centerAnimationLatitude.fillMode              = .forwards
 
-            let centerAnimationLongitude = CAKeyframeAnimation(keyPath: "centerCoordinateLongitude")
+            let centerAnimationLongitude = CAKeyframeAnimation(keyPath: "position.x")
             centerAnimationLongitude.keyTimes              = keyTimes
             centerAnimationLongitude.values                = longitudes
             centerAnimationLongitude.duration              = time
@@ -615,7 +615,7 @@ public class CameraManager {
 
         if camera.bearing != nil {
             // Note - these are NOT using CAKeyframeAnimation
-            let bearingAnimation = CABasicAnimation(keyPath: "bearing")
+            let bearingAnimation = CABasicAnimation(keyPath: "cornerRadius")
             bearingAnimation.toValue               = flyTo.destBearing
             bearingAnimation.duration              = time
             bearingAnimation.beginTime             = 0.0
@@ -626,7 +626,7 @@ public class CameraManager {
         }
 
         if camera.pitch != nil {
-            let pitchAnimation = CABasicAnimation(keyPath: "pitch")
+            let pitchAnimation = CABasicAnimation(keyPath: "zPosition")
             pitchAnimation.toValue               = flyTo.destPitch
             pitchAnimation.duration              = time
             pitchAnimation.beginTime             = 0.0
