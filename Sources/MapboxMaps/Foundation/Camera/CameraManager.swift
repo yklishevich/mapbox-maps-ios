@@ -515,6 +515,59 @@ public class CameraManager {
         return centerCoordinate
     }
 
+    public func fly2(to camera: CameraOptions, duration: TimeInterval? = nil, timingFunction: CAMediaTimingFunction = CAMediaTimingFunction(name: .easeOut), completion: ((Bool) -> Void)? = nil) -> UIViewPropertyAnimator? {
+
+        guard let mapView = mapView else {
+            assertionFailure("MapView is nil.")
+            completion?(false)
+            return nil
+        }
+
+        guard let flyTo = FlyToInterpolator(from: mapView.cameraView.camera,
+                                            to: camera,
+                                            size: mapView.bounds.size) else {
+            completion?(false)
+            assertionFailure("FlyToInterpolator could not be created.")
+            return nil
+        }
+
+        var time = duration ?? -1.0
+
+        // If there was no duration specified, or a negative argument, use a default
+        if time < 0.0 {
+            time = flyTo.duration()
+        }
+
+        guard time > 0.0 else {
+            setCamera(to: camera, completion: completion)
+            return nil
+        }
+
+        // TODO: Consider timesteps based on the flyTo curve, for example, it would be beneficial to have a higher
+        // density of time steps at towards the start and end of the animation to avoid jiggling.
+        let timeSteps = stride(from: 0.0, through: 1.0, by: 0.025)
+        let keyTimes: [Double] = Array(timeSteps)
+
+        let animator = UIViewPropertyAnimator(duration: time, curve: .linear) {
+
+            UIView.animateKeyframes(withDuration: 0, delay: 0, options: []) {
+
+                for keyTime in keyTimes {
+                    let interpolatedCoordinate = flyTo.coordinate(at: keyTime)
+                    let interpolatedZoom = flyTo.zoom(at: keyTime)
+
+                    UIView.addKeyframe(withRelativeStartTime: keyTime, relativeDuration: 0.025) {
+                        print("inside add keyframe : \(keyTime)")
+                        self.mapView?.cameraView.centerCoordinate = interpolatedCoordinate
+                        self.mapView?.cameraView.zoom = CGFloat(interpolatedZoom)
+                    }
+                }
+            }
+        }
+
+        return animator
+    }
+
     /// Moves the viewpoint to a different location using a transition animation that
     /// evokes powered flight and an optional transition duration and timing function
     ///

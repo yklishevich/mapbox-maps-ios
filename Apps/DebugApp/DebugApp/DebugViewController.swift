@@ -11,7 +11,8 @@ import Turf
 public class DebugViewController: UIViewController {
 
     internal var mapView: MapView!
-
+    var animator: UIViewPropertyAnimator?
+    var slider: UISlider!
     var resourceOptions: ResourceOptions {
         guard let accessToken = AccountManager.shared.accessToken else {
             fatalError("Access token not set")
@@ -21,6 +22,10 @@ public class DebugViewController: UIViewController {
         return resourceOptions
     }
 
+    @objc func sliderValueChanged(_ sender: Any) {
+        animator?.fractionComplete = CGFloat(slider.value)
+    }
+
     override public func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,22 +33,37 @@ public class DebugViewController: UIViewController {
         mapView.update { (mapOptions) in
             mapOptions.location.showUserLocation = true
         }
+        self.view.addSubview(mapView)
+
+        slider = UISlider(frame: CGRect(origin: self.view.center, size: CGSize(width: 200, height: 20)))
+        slider.isContinuous = true
+        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+
+        self.view.addSubview(slider)
+
 
         mapView.on(.mapLoadingFinished) { _ in
 
-            let coordinate = CLLocationCoordinate2D(latitude: 39.085006, longitude: -77.150925)
-            self.mapView.cameraManager.setCamera(centerCoordinate: coordinate,
-                                                 zoom: 12)
+            let coordinate1 = CLLocationCoordinate2D(latitude: 39.085006, longitude: -77.150925)
+            let cameraOptions1 = CameraOptions(center: coordinate1, padding: nil, anchor: nil, zoom: 12, bearing: nil, pitch: nil)
+            self.mapView.cameraManager.setCamera(to: cameraOptions1)
 
-            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 10, delay: 2, options: .curveLinear) {
+            let sanFrancisco = CLLocationCoordinate2D(latitude: 37.774115479976565, longitude: -122.45613600067855)
 
-                let coordinate2 = CLLocationCoordinate2D(latitude: 39.085006, longitude: -78.12)
-                self.mapView.cameraManager.setCamera(centerCoordinate: coordinate2, zoom: 16)
+            let dc = CLLocationCoordinate2D(latitude: 38.921029472657615, longitude: -77.04221240204367)
+            DispatchQueue.main.asyncAfter(deadline: .now()+2) {
 
-            } completion: { (_) in
-                print("Camera animation complete!!!")
+                let cameraOptions2 = CameraOptions(center: sanFrancisco, padding: nil, anchor: nil, zoom: 12, bearing: nil, pitch: nil)
+                self.animator = self.mapView.cameraManager.fly2(to: cameraOptions2, duration: 10)
+//                self.animator?.pausesOnCompletion = true
+
+//                DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+//                    self.animator?.stopAnimation(false)
+//                    self.animator?.finishAnimation(at: .current)
+//                }
+                self.animator?.startAnimation()
             }
         }
-        self.view.addSubview(mapView)
+
     }
 }
