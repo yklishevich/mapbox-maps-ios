@@ -72,6 +72,7 @@ open class ObserverConcrete: Observer {
     }
 }
 
+
 internal typealias PendingAnimationCompletion = (completion: AnimationCompletion, animatingPosition: UIViewAnimatingPosition)
 
 open class BaseMapView: UIView, MapClient, MBMMetalViewProvider, CameraViewDelegate {
@@ -237,6 +238,7 @@ open class BaseMapView: UIView, MapClient, MBMMetalViewProvider, CameraViewDeleg
                                                    glyphsRasterizationOptions: glyphsRasterizationOptions)
 
         __map = try! Map(client: self, mapOptions: mapOptions, resourceOptions: resourceOptions)
+        try! __map.setUserAnimationInProgressForInProgress(true)
 
         try! __map?.createRenderer()
 

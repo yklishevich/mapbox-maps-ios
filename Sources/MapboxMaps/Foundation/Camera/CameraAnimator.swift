@@ -58,6 +58,7 @@ public class CameraAnimator: NSObject {
 
     /// Starts the animation.
     public func startAnimation() {
+        
         propertyAnimator?.startAnimation()
     }
 

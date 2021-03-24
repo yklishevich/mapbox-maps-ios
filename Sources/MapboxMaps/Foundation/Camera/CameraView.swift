@@ -27,8 +27,13 @@ internal protocol CameraViewDelegate: class {
     func jumpTo(camera: CameraOptions)
 }
 
+
+
 /// A view that represents a camera view port.
 public class CameraView: UIView {
+    
+    static var callCount: UInt64 = 0
+    
 
     public var camera: CameraOptions {
         get {
@@ -198,43 +203,63 @@ public class CameraView: UIView {
 
         // Get the latest interpolated values of the camera properties (if they exist)
         let targetCamera = localCamera.wrap()
+//        Self.callCount = Self.callCount + 1
+//        print("\nTime: \(Date()) Count: \(Self.callCount)")
 
         // Apply targetCamera options only if they are different from currentCamera options
-        if currentCamera != targetCamera {
 
-            // Diff the targetCamera with the currentCamera and apply diffed camera properties to map
-            let diffedCamera = CameraOptions()
 
-            if targetCamera.zoom != currentCamera.zoom {
-                diffedCamera.zoom = targetCamera.zoom
-            }
+        // Diff the targetCamera with the currentCamera and apply diffed camera properties to map
+        let diffedCamera = CameraOptions()
 
-            if targetCamera.bearing != currentCamera.bearing {
-                diffedCamera.bearing = targetCamera.bearing
-            }
+        if targetCamera.zoom != currentCamera.zoom, abs(targetCamera.zoom! - currentCamera.zoom!) > 1e-7 {
+//            print("CurrentCamera.zoom = \(currentCamera.zoom!) TargetCamera.zoom = \(targetCamera.zoom!)")
+            diffedCamera.zoom = targetCamera.zoom
+        }
 
-            if targetCamera.pitch != currentCamera.pitch {
-                diffedCamera.pitch = targetCamera.pitch
-            }
+        if targetCamera.bearing != currentCamera.bearing, abs(targetCamera.bearing! - currentCamera.bearing!) > 1e-7 {
+//            print("CurrentCamera.bearing = \(currentCamera.bearing!) TargetCamera.bearing = \(targetCamera.bearing!)")
+            diffedCamera.bearing = targetCamera.bearing
+        }
 
-            if targetCamera.center != currentCamera.center {
-                diffedCamera.center = targetCamera.center
-            }
+        if targetCamera.pitch != currentCamera.pitch, abs(targetCamera.pitch! - currentCamera.pitch!) > 1e-7 {
+//            print("CurrentCamera.pitch = \(currentCamera.pitch!) TargetCamera.pitch = \(targetCamera.pitch!)")
+            diffedCamera.pitch = targetCamera.pitch
+        }
 
-            if targetCamera.anchor != currentCamera.anchor {
-                diffedCamera.anchor = targetCamera.anchor
-            }
+        if targetCamera.center != currentCamera.center,
+           let targetLatitude = targetCamera.center?.latitude,
+           let targetLongitude = targetCamera.center?.longitude,
+           let currentLatitude = currentCamera.center?.latitude,
+           let currentLongitude = currentCamera.center?.longitude,
+           abs(targetLatitude - currentLatitude) > 1e-10,
+           abs(targetLongitude - currentLongitude) > 1e-10 {
+//            print("CurrentCamera.center = \(currentCamera.center!) TargetCamera.center = \(targetCamera.center!)")
+            diffedCamera.center = targetCamera.center
+        }
 
-            if targetCamera.padding != currentCamera.padding {
-                diffedCamera.padding = targetCamera.padding
-            }
+//        if targetCamera.anchor != anchor {
+//            print("CurrentCamera.anchor = \(currentCamera.anchor) TargetCamera.anchor = \(targetCamera.anchor)")
+//            diffedCamera.anchor = targetCamera.anchor
+//        }
 
+        if targetCamera.padding != currentCamera.padding {
+//            print("CurrentCamera.padding = \(currentCamera.padding!) TargetCamera.anchor = \(targetCamera.padding!)")
+            diffedCamera.padding = targetCamera.padding
+        }
+
+        if diffedCamera.hasNonNullProperties {
+            diffedCamera.anchor = targetCamera.anchor
             delegate.jumpTo(camera: diffedCamera)
         }
     }
 }
 
 fileprivate extension CameraOptions {
+    
+    var hasNonNullProperties: Bool {
+        center != nil || zoom != nil || pitch != nil || bearing != nil || anchor != nil || padding != nil
+    }
 
     func wrap() -> CameraOptions {
         return CameraOptions(center: self.center?.wrap(),

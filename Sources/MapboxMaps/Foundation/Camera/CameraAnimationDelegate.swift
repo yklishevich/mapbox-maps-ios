@@ -16,4 +16,5 @@ internal protocol CameraAnimatorDelegate: class {
     func schedulePendingCompletion(forAnimator animator: CameraAnimator,
                                    completion: @escaping AnimationCompletion,
                                    animatingPosition: UIViewAnimatingPosition)
+    
 }

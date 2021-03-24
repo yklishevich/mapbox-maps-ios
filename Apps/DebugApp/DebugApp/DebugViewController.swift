@@ -84,7 +84,7 @@ public class DebugViewController: UIViewController {
             self.mapView.cameraManager.setCamera(centerCoordinate: initialCenter, zoom: 12)
 
             self.runningAnimator = self.mapView.cameraManager.makeCameraAnimator(duration: 10, curve: .linear) {
-                self.mapView.cameraManager.setCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 36.0893334370578, longitude: -78.06549948618996), zoom: 12)
+                self.mapView.bearing = 720
             }
 
             self.runningAnimator!.startAnimation(afterDelay: 2)
