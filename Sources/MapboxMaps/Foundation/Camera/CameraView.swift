@@ -203,37 +203,26 @@ public class CameraView: UIView {
 
         // Get the latest interpolated values of the camera properties (if they exist)
         let targetCamera = localCamera.wrap()
-//        Self.callCount = Self.callCount + 1
-//        print("\nTime: \(Date()) Count: \(Self.callCount)")
 
-        // Apply targetCamera options only if they are different from currentCamera options
-
-
-        // Diff the targetCamera with the currentCamera and apply diffed camera properties to map
+        // Create a camera with diffed properties
         let diffedCamera = CameraOptions()
 
-        if targetCamera.zoom != currentCamera.zoom, abs(targetCamera.zoom! - currentCamera.zoom!) > 1e-7 {
+        if let targetZoom = targetCamera.zoom, let currentZoom = currentCamera.zoom, targetZoom.isNotApproximatelyEqual(to: currentZoom, within: 1e-10) {
 //            print("CurrentCamera.zoom = \(currentCamera.zoom!) TargetCamera.zoom = \(targetCamera.zoom!)")
             diffedCamera.zoom = targetCamera.zoom
         }
 
-        if targetCamera.bearing != currentCamera.bearing, abs(targetCamera.bearing! - currentCamera.bearing!) > 1e-7 {
+        if let targetBearing = targetCamera.bearing, let currentBearing = currentCamera.bearing, targetBearing.isNotApproximatelyEqual(to: currentBearing)  {
 //            print("CurrentCamera.bearing = \(currentCamera.bearing!) TargetCamera.bearing = \(targetCamera.bearing!)")
             diffedCamera.bearing = targetCamera.bearing
         }
 
-        if targetCamera.pitch != currentCamera.pitch, abs(targetCamera.pitch! - currentCamera.pitch!) > 1e-7 {
+        if let targetPitch = targetCamera.pitch, let currentPitch = currentCamera.pitch, targetPitch.isNotApproximatelyEqual(to: currentPitch) {
 //            print("CurrentCamera.pitch = \(currentCamera.pitch!) TargetCamera.pitch = \(targetCamera.pitch!)")
             diffedCamera.pitch = targetCamera.pitch
         }
 
-        if targetCamera.center != currentCamera.center,
-           let targetLatitude = targetCamera.center?.latitude,
-           let targetLongitude = targetCamera.center?.longitude,
-           let currentLatitude = currentCamera.center?.latitude,
-           let currentLongitude = currentCamera.center?.longitude,
-           abs(targetLatitude - currentLatitude) > 1e-10,
-           abs(targetLongitude - currentLongitude) > 1e-10 {
+        if let targetCenter = targetCamera.center, let currentCenter = currentCamera.center, targetCenter.isNotApproximatelyEqual(to: currentCenter) {
 //            print("CurrentCamera.center = \(currentCamera.center!) TargetCamera.center = \(targetCamera.center!)")
             diffedCamera.center = targetCamera.center
         }
@@ -243,8 +232,7 @@ public class CameraView: UIView {
 //            diffedCamera.anchor = targetCamera.anchor
 //        }
 
-        if targetCamera.padding != currentCamera.padding {
-//            print("CurrentCamera.padding = \(currentCamera.padding!) TargetCamera.anchor = \(targetCamera.padding!)")
+        if let targetPadding = targetCamera.padding, let currentPadding = currentCamera.padding, targetPadding.isNotApproximatelyEqual(to: currentPadding) {
             diffedCamera.padding = targetCamera.padding
         }
 
