@@ -9,7 +9,7 @@ import MapboxCoreMaps
 #endif
 
 //swiftlint:disable explicit_acl explicit_top_level_acl
-class AnnotationStyleDelegateMock: AnnotationStyleDelegate {
+class AnnotationStyleDelegateMock: AnnotationStyleDelegate_Legacy {
     //swiftlint:disable function_parameter_count
     func setStyleImage(image: UIImage,
                        with identifier: String,

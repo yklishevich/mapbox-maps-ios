@@ -24,7 +24,7 @@ open class MapView: BaseMapView, EventsEmitter {
     public internal(set) var style: Style!
 
     /// Controls the addition/removal of annotations to the map.
-    public internal(set) var annotationManager: AnnotationManager!
+    public internal(set) var annotationManager: AnnotationManager_Legacy!
 
     /// A reference to the `EventsManager` used for dispatching telemetry.
     public var eventsListener: EventsListener!

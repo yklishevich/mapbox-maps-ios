@@ -49,4 +49,4 @@ extension MapView: LocationSupportableMapView {
 
 }
 
-extension Style: AnnotationStyleDelegate { }
+extension Style: AnnotationStyleDelegate_Legacy { }

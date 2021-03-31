@@ -12,7 +12,7 @@ import MapboxMapsStyle
 #endif
 
 //swiftlint:disable explicit_acl explicit_top_level_acl
-class AnnotationSupportableMapMock: UIView, AnnotationSupportableMap {
+class AnnotationSupportableMapMock: UIView, AnnotationSupportableMap_Legacy {
 
     var observable: Observable? {
         nil

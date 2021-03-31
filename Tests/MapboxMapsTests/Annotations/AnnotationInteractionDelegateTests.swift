@@ -36,11 +36,11 @@ class AnnotationInteractionDelegateTests: XCTestCase {
 
     func testProgrammaticAnnotationSelection() {
         // Given
-        let annotationManager = AnnotationManager(for: annotationSupportableMapMock,
+        let annotationManager = AnnotationManager_Legacy(for: annotationSupportableMapMock,
                                                   with: annotationSupportableStyleMock,
-                                                  options: AnnotationOptions())
+                                                  options: AnnotationOptions_Legacy())
         annotationManager.interactionDelegate = self
-        let annotation = PointAnnotation(coordinate: defaultCoordinate)
+        let annotation = PointAnnotation_Legacy(coordinate: defaultCoordinate)
         _ = annotationManager.addAnnotation(annotation)
         XCTAssertEqual(annotationManager.selectedAnnotations.count, 0)
 
@@ -62,13 +62,13 @@ class AnnotationInteractionDelegateTests: XCTestCase {
     }
 }
 
-extension AnnotationInteractionDelegateTests: AnnotationInteractionDelegate {
-    func didSelectAnnotation(annotation: Annotation) {
+extension AnnotationInteractionDelegateTests: AnnotationInteractionDelegate_Legacy {
+    func didSelectAnnotation(annotation: Annotation_Legacy) {
         selectionDelegateWasCalled = true
         selectionExpectation?.fulfill()
     }
 
-    func didDeselectAnnotation(annotation: Annotation) {
+    func didDeselectAnnotation(annotation: Annotation_Legacy) {
         deselectionDelegateWasCalled = true
         deselectionDelegateWasCalled = true
     }

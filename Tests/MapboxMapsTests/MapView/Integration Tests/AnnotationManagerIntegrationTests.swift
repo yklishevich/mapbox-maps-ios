@@ -21,10 +21,10 @@ internal class AnnotationManagerIntegrationTestCase: MapViewIntegrationTestCase 
         didFinishLoadingStyle = { mapView in
 
             // Given
-            let annotation = PointAnnotation(coordinate: mapView.centerCoordinate)
-            let annotationManager = AnnotationManager(for: mapView,
+            let annotation = PointAnnotation_Legacy(coordinate: mapView.centerCoordinate)
+            let annotationManager = AnnotationManager_Legacy(for: mapView,
                                                       with: self,
-                                                      options: AnnotationOptions())
+                                                      options: AnnotationOptions_Legacy())
             annotationManager.addAnnotation(annotation)
 
             // When
@@ -62,15 +62,15 @@ internal class AnnotationManagerIntegrationTestCase: MapViewIntegrationTestCase 
         didFinishLoadingStyle = { mapView in
 
             // Given
-            let annotation = PointAnnotation(coordinate: mapView.centerCoordinate)
+            let annotation = PointAnnotation_Legacy(coordinate: mapView.centerCoordinate)
             let requiredIndex = 3
             let position = LayerPosition(above: nil, below: nil, at: requiredIndex)
-            let annotationManager = AnnotationManager(for: mapView,
+            let annotationManager = AnnotationManager_Legacy(for: mapView,
                                                       with: self,
-                                                      options: AnnotationOptions(layerPosition: position))
+                                                      options: AnnotationOptions_Legacy(layerPosition: position))
             annotationManager.addAnnotation(annotation)
 
-            guard let layerId = annotationManager.layerId(for: PointAnnotation.self) else {
+            guard let layerId = annotationManager.layerId(for: PointAnnotation_Legacy.self) else {
                 XCTFail("Layer should exist")
                 return
             }
@@ -104,10 +104,10 @@ internal class AnnotationManagerIntegrationTestCase: MapViewIntegrationTestCase 
         didFinishLoadingStyle = { mapView in
 
             // Given
-            var annotation = PointAnnotation(coordinate: mapView.centerCoordinate)
-            let annotationManager = AnnotationManager(for: mapView,
+            var annotation = PointAnnotation_Legacy(coordinate: mapView.centerCoordinate)
+            let annotationManager = AnnotationManager_Legacy(for: mapView,
                                                       with: self,
-                                                      options: AnnotationOptions())
+                                                      options: AnnotationOptions_Legacy())
             annotation.userInfo = ["TestKey": true]
             annotationManager.addAnnotation(annotation)
 
@@ -153,7 +153,7 @@ internal class AnnotationManagerIntegrationTestCase: MapViewIntegrationTestCase 
  */
 
 // swiftlint:disable function_parameter_count identifier_name
-extension AnnotationManagerIntegrationTestCase: AnnotationStyleDelegate {
+extension AnnotationManagerIntegrationTestCase: AnnotationStyleDelegate_Legacy {
     func setStyleImage(image: UIImage, with identifier: String, sdf: Bool, stretchX: [ImageStretches], stretchY: [ImageStretches], scale: CGFloat, imageContent: ImageContent?) -> Result<Bool, ImageError> {
         guard let style = style else {
             XCTFail("No style available")

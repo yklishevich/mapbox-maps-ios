@@ -95,11 +95,11 @@ extension MapView {
         locationManager.updateLocationOptions(with: mapOptions.location)
     }
 
-    internal func setupAnnotationManager(with annotationSupportableMap: AnnotationSupportableMap, and style: Style, options: AnnotationOptions) {
-        annotationManager = AnnotationManager(for: annotationSupportableMap, with: style, options: options)
+    internal func setupAnnotationManager(with annotationSupportableMap: AnnotationSupportableMap_Legacy, and style: Style, options: AnnotationOptions_Legacy) {
+        annotationManager = AnnotationManager_Legacy(for: annotationSupportableMap, with: style, options: options)
     }
 
-    internal func updateAnnotationManager(with newOptions: AnnotationOptions) {
+    internal func updateAnnotationManager(with newOptions: AnnotationOptions_Legacy) {
         annotationManager.updateAnnotationOptions(with: newOptions)
     }
 

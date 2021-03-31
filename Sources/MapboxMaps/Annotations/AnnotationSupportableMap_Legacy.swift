@@ -10,7 +10,7 @@ import MapboxMapsStyle
 import MapboxMapsFoundation
 #endif
 
-public protocol AnnotationSupportableMap: UIView {
+public protocol AnnotationSupportableMap_Legacy: UIView {
     var observable: Observable? { get }
     func visibleFeatures(in rect: CGRect,
                          styleLayers: Set<String>?,
@@ -18,7 +18,7 @@ public protocol AnnotationSupportableMap: UIView {
                          completion: @escaping (Result<[Feature], BaseMapView.QueryRenderedFeaturesError>) -> Void)
 }
 
-extension BaseMapView: AnnotationSupportableMap {
+extension BaseMapView: AnnotationSupportableMap_Legacy {
 
     public var observable: Observable? {
         return __map

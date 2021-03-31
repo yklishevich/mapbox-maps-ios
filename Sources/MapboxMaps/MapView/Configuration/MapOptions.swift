@@ -16,5 +16,5 @@ public struct MapOptions: Equatable {
 
     public var render: RenderOptions = RenderOptions()
 
-    public var annotations: AnnotationOptions = AnnotationOptions()
+    public var annotations: AnnotationOptions_Legacy = AnnotationOptions_Legacy()
 }

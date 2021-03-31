@@ -8,7 +8,7 @@ import MapboxCoreMaps
 #endif
 
 //swiftlint:disable class_delegate_protocol
-public protocol AnnotationStyleDelegate {
+public protocol AnnotationStyleDelegate_Legacy {
     //swiftlint:disable function_parameter_count
     func setStyleImage(image: UIImage,
                        with identifier: String,

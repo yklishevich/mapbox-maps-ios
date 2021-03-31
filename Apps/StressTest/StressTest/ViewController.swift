@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         2 * styles.count * coords.count
     }
 
-    var annotations: [PointAnnotation] = []
+    var annotations: [PointAnnotation_Legacy] = []
     var color: StylePropertyValue?
     var resourceOptions: ResourceOptions!
     var snapshotter: Snapshotter?
@@ -196,7 +196,7 @@ class ViewController: UIViewController {
         let startOptions = mapView.camera
         let start = startOptions.center!
 
-        let lineAnnotation = LineAnnotation(coordinates: [start, end])
+        let lineAnnotation = LineAnnotation_Legacy(coordinates: [start, end])
 
         // Add the annotation to the map.
         print("Adding line annotation")
@@ -222,7 +222,7 @@ class ViewController: UIViewController {
     func addAnnotations(around coord: CLLocationCoordinate2D) {
         for lat in stride(from: coord.latitude-0.25, to: coord.latitude+0.25, by: 0.05) {
             for lng in stride(from: coord.longitude-0.25, to: coord.longitude+0.25, by: 0.05) {
-                let pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2D(lat, lng))
+                let pointAnnotation = PointAnnotation_Legacy(coordinate: CLLocationCoordinate2D(lat, lng))
                 annotations.append(pointAnnotation)
             }
         }
