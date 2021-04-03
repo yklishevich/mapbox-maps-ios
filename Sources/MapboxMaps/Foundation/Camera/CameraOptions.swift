@@ -1,6 +1,7 @@
 import Foundation
 import CoreLocation
 import UIKit
+import MapboxCoreMaps
 
 public extension CameraOptions {
 

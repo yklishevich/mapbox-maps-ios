@@ -12,6 +12,9 @@ public class DebugViewController: UIViewController {
 
     internal var mapView: MapView!
     internal var runningAnimator: CameraAnimator?
+    internal var offlineManager: OfflineManager?
+
+    var tileStore: TileStore?
 
     var resourceOptions: ResourceOptions {
         guard let accessToken = AccountManager.shared.accessToken else {
@@ -97,6 +100,84 @@ public class DebugViewController: UIViewController {
             }
 
             print("The map failed to load.. \(type) = \(message)")
+        }
+
+
+        offlineManager = OfflineManager(resourceOptions: mapView.__map.getResourceOptions())
+
+        guard let offlineManager = offlineManager else {
+            return
+        }
+
+/*
+        // 1. Create style package with loadStylePack() call.
+        let stylePackLoadOptions = StylePackLoadOptions(
+            __glyphsRasterizationMode: NSNumber(value: GlyphsRasterizationMode.ideographsRasterizedLocally.rawValue), //NSNumber(value: GlyphsRasterizationMode.noGlyphsRasterizedLocally.rawValue),
+            metadata: "Hello World")
+
+        offlineManager.loadStylePack(forStyleURL: StyleURI.streets.url.absoluteString,
+                                     loadOptions: stylePackLoadOptions) { (result) in
+            guard let result = result,
+                  result.isValue(),
+                  let stylePack = result.value as? StylePackLoadProgress else {
+                return
+            }
+
+            let loadingCompleted = (stylePack.completedResourceCount == stylePack.requiredResourceCount)
+            print("Style pack loading complete = \(loadingCompleted)")
+        }
+*/
+
+        // 2. Create an offline region with tiles for Streets and Satellite styles.
+        let stylePackOptions = StylePackLoadOptions(
+            __glyphsRasterizationMode: NSNumber(value: GlyphsRasterizationMode.allGlyphsRasterizedLocally.rawValue),
+            metadata: nil)
+
+        let streetsTilesetDescriptorOptions = TilesetDescriptorOptions(
+            __styleURL: StyleURI.streets.url.absoluteString,
+            minZoom: 0,
+            maxZoom: 5,
+            stylePack: stylePackOptions)
+
+        let streetsDescriptor = offlineManager.createTilesetDescriptor(for: streetsTilesetDescriptorOptions)
+
+//        let satelliteTilesetDescriptorOptions = TilesetDescriptorOptions(
+//            __styleURL: "mapbox://mapbox.satellite-v2",
+//            minZoom: 0,
+//            maxZoom: 5,
+//            stylePack: nil
+//        )
+//        let satelliteDescriptor = offlineManager.createTilesetDescriptor(for: satelliteTilesetDescriptorOptions)
+
+        // 3. load offline region
+        tileStore = TileStore.getInstance()
+
+        let tileLoadOptions = TileLoadOptions(
+            __criticalPriority: false,
+            acceptExpired: true,
+            networkRestriction: .none)
+
+        let offlineRegionLoadOptions = OfflineRegionLoadOptions(
+            __geometry: MBXGeometry(coordinate: CLLocationCoordinate2D(latitude: 10, longitude: 10)),
+            descriptors: [streetsDescriptor/*, satelliteDescriptor*/],
+            metadata: nil,
+            tileLoadOptions: tileLoadOptions,
+            start: nil,//CLLocation(latitude: 10, longitude: 10),
+            averageBytesPerSecond: nil,
+            extraOptions: nil)
+
+        tileStore?.loadOfflineRegion(forId: "my_region",
+                                    loadOptions: offlineRegionLoadOptions) { (expected) in
+            guard let expected = expected,
+                  expected.isValue(),
+                  let region = expected.value as? MapboxCommon.OfflineRegion else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                let loadingCompleted = (region.completedResourceCount == region.requiredResourceCount)
+                print("Offline region loading complete = \(loadingCompleted)")
+            }
         }
     }
 }

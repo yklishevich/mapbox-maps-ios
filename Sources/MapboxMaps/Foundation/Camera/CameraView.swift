@@ -1,9 +1,10 @@
 import UIKit
+import MapboxCoreMaps
 
 /// Internal protocol that provides needed information / methods for the `CameraView`
 internal protocol CameraViewDelegate: class {
     /// The map's current camera
-    var camera: CameraOptions { get }
+    var camera: MapboxCoreMaps.CameraOptions { get }
 
     /// The map's current center coordinate.
     var centerCoordinate: CLLocationCoordinate2D { get }

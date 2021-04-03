@@ -95,8 +95,6 @@ class CustomHttpService: HttpServiceInterface {
         print("TODO: download(for:callback:) conformance")
         return 0
     }
-
-    var peer: MBXPeerWrapper?
 }
 
 class HTTPIntegrationTests: MapViewIntegrationTestCase {
