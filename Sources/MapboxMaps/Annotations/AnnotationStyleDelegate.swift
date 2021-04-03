@@ -29,5 +29,5 @@ public protocol AnnotationStyleDelegate {
                               value: [String: Any]) -> Result<Bool, SourceError>
 
     func addLayer(layer: Layer,
-                  layerPosition: LayerPosition?) -> Result<Bool, LayerError>
+                  layerPosition: LayerPosition?) throws
 }

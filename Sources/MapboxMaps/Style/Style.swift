@@ -38,26 +38,13 @@ public class Style {
      - Returns: If operation successful, returns a `true` as part of the `Result`
                 success case. Else, returns a `LayerError` in the `Result` failure case.
      */
-    @discardableResult
-    public func addLayer(layer: Layer, layerPosition: LayerPosition? = nil) -> Result<Bool, LayerError> {
+    public func addLayer(layer: Layer, layerPosition: LayerPosition? = nil) throws {
         // Attempt to encode the provided layer into JSON and apply it to the map
-        do {
-            let layerJSON = try layer.jsonObject()
-            let expected = try styleManager.addStyleLayer(forProperties: layerJSON, layerPosition: layerPosition)
+        let layerJSON = try layer.jsonObject()
+        let expected = try styleManager.addStyleLayer(forProperties: layerJSON, layerPosition: layerPosition)
 
-            if expected.isError() {
-                return .failure(.addStyleLayerFailed(expected.error as? String))
-            } else {
-                return .success(true)
-            }
-        } catch {
-            // Return failure if we run into an issue
-            switch error {
-            case let error as LayerError:
-                return .failure(error)
-            default:
-                return .failure(.layerEncodingFailed(error))
-            }
+        if expected.isError() {
+            throw LayerError.addStyleLayerFailed(expected.error as? String)
         }
     }
 

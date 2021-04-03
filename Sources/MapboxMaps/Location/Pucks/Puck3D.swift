@@ -78,7 +78,9 @@ internal class Puck3D: Puck {
             }
             self.removePuck()
             style.addSource(source: self.modelSource, identifier: "puck-model-source")
-            style.addLayer(layer: self.modelLayer)
+
+            // TODO: Handle error
+            try! style.addLayer(layer: self.modelLayer)
         }
 
         // Do initial setup

@@ -205,12 +205,7 @@ private extension Puck2D {
         layer.paint = paint
 
         // Add layer to style
-        let addLayerResult = style.addLayer(layer: layer, layerPosition: nil)
-
-        if case .failure(let layerError) = addLayerResult {
-            throw layerError
-        }
-
+        try style.addLayer(layer: layer, layerPosition: nil)
         locationIndicatorLayer = layer
     }
 
@@ -246,11 +241,7 @@ private extension Puck2D {
         layer.paint = paint
 
         // Add layer to style
-        let addLayerResult = style.addLayer(layer: layer, layerPosition: nil)
-
-        if case .failure(let layerError) = addLayerResult {
-            throw layerError
-        }
+        try style.addLayer(layer: layer, layerPosition: nil)
         locationIndicatorLayer = layer
     }
 }
