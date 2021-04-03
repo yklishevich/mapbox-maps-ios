@@ -46,17 +46,17 @@ public class ExternalVectorSourceExample: UIViewController, ExampleProtocol {
 
         let addSourceResult = mapView.style.addSource(source: vectorSource, identifier: sourceIdentifier)
 
-        // Define the layer's positioning within the layer stack so
-        // that it doesn't obscure other important labels.
-        let layerPosition = LayerPosition(above: nil, below: "waterway-label", at: nil)
-        let addLayerResult = mapView.style.addLayer(layer: lineLayer, layerPosition: layerPosition)
-
         if case .failure(let sourceError) = addSourceResult {
             displayAlert(message: sourceError.localizedDescription)
         }
 
-        if case .failure(let layerError) = addLayerResult {
-            displayAlert(message: layerError.localizedDescription)
+        // Define the layer's positioning within the layer stack so
+        // that it doesn't obscure other important labels.
+        let layerPosition = LayerPosition(above: nil, below: "waterway-label", at: nil)
+        do {
+            try mapView.style.addLayer(layer: lineLayer, layerPosition: layerPosition)
+        } catch {
+            displayAlert(message: error.localizedDescription)
         }
     }
 

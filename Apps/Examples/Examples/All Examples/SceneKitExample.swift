@@ -57,7 +57,7 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
         skyLayer.paint?.skyAtmosphereSun = .constant([0, 0])
         skyLayer.paint?.skyAtmosphereSunIntensity = .constant(15.0)
 
-        _ = self.mapView.style.addLayer(layer: skyLayer)
+        try! self.mapView.style.addLayer(layer: skyLayer)
 
         // Re-use terrain source for hillshade
         let map = self.mapView.__map!

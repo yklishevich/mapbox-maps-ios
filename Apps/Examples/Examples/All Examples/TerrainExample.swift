@@ -50,6 +50,6 @@ public class TerrainExample: UIViewController, ExampleProtocol {
         skyLayer.paint?.skyAtmosphereSun = .constant([0.0, 0.0])
         skyLayer.paint?.skyAtmosphereSunIntensity = .constant(15.0)
 
-        _ = mapView.style.addLayer(layer: skyLayer)
+        try! mapView.style.addLayer(layer: skyLayer)
     }
 }

@@ -67,7 +67,7 @@ public class AnimateGeoJSONLineExample: UIViewController, ExampleProtocol {
         // Add the lineLayer to the map.
         mapView.style.addSource(source: routeLineSource,
                                 identifier: sourceIdentifier)
-        mapView.style.addLayer(layer: lineLayer)
+        try! mapView.style.addLayer(layer: lineLayer)
 
     }
 
