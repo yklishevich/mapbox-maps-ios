@@ -28,6 +28,7 @@ class BackgroundLayerIntegrationTests: MapViewIntegrationTestCase {
         style.styleURI = .streets
 
         didFinishLoadingStyle = { _ in
+
             var layer = BackgroundLayer(id: "test-id")
             layer.source = "some-source"
             layer.sourceLayer = nil
@@ -43,13 +44,11 @@ class BackgroundLayerIntegrationTests: MapViewIntegrationTestCase {
             layer.paint?.backgroundPatternTransition = StyleTransition(duration: 10.0, delay: 10.0)
 
             // Add the layer
-            let addResult = style.addLayer(layer: layer)
-
-            switch (addResult) {
-                case .success(_):
-                    successfullyAddedLayerExpectation.fulfill()
-                case .failure(let error):
-                    XCTFail("Failed to add BackgroundLayer because of error: \(error)")
+            do {
+                try style.addLayer(layer: layer)
+                successfullyAddedLayerExpectation.fulfill()
+            } catch {
+                XCTFail("Failed to add BackgroundLayer because of error: \(error)")
             }
 
             // Retrieve the layer

@@ -54,7 +54,7 @@ class SymbolLayerIntegrationTests: MapViewIntegrationTestCase {
             layer.layout?.symbolZOrder = Value<SymbolZOrder>.testConstantValue()
             layer.layout?.textAllowOverlap = Value<Bool>.testConstantValue()
             layer.layout?.textAnchor = Value<TextAnchor>.testConstantValue()
-//            layer.layout?.textField = Value<String>.testConstantValue()
+            layer.layout?.textField = Value<String>.testConstantValue()
             layer.layout?.textFont = Value<[String]>.testConstantValue()
             layer.layout?.textIgnorePlacement = Value<Bool>.testConstantValue()
             layer.layout?.textJustify = Value<TextJustify>.testConstantValue()
@@ -100,13 +100,11 @@ class SymbolLayerIntegrationTests: MapViewIntegrationTestCase {
             layer.paint?.textTranslateAnchor = Value<TextTranslateAnchor>.testConstantValue()
 
             // Add the layer
-            let addResult = style.addLayer(layer: layer)
-
-            switch (addResult) {
-                case .success(_):
-                    successfullyAddedLayerExpectation.fulfill()
-                case .failure(let error):
-                    XCTFail("Failed to add SymbolLayer because of error: \(error)")
+            do {
+                try style.addLayer(layer: layer)
+                successfullyAddedLayerExpectation.fulfill()
+            } catch {
+                XCTFail("Failed to add SymbolLayer because of error: \(error)")
             }
 
             // Retrieve the layer
