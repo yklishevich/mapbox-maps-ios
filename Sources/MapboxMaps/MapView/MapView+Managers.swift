@@ -77,12 +77,11 @@ extension MapView {
     }
 
     internal func setupOrnaments(with view: OrnamentSupportableView, options: OrnamentOptions) {
-        ornamentsManager = OrnamentsManager(for: view,
-                                            withConfig: options.makeConfig())
+        ornamentsManager = OrnamentsManager(view: view, options: options)
     }
 
     internal func updateOrnaments(with newOptions: OrnamentOptions) {
-        ornamentsManager.ornamentConfig = newOptions.makeConfig()
+        ornamentsManager.options = newOptions
     }
 
     internal func setupUserLocationManager(with locationSupportableMapView: LocationSupportableMapView, options: LocationOptions) {
