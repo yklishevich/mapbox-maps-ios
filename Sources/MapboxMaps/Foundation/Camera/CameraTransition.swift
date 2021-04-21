@@ -5,6 +5,7 @@ import CoreLocation
 public struct CameraTransition {
 
     /// Represents a change to the center coordinate of the map.
+    /// NOTE: Setting the `toValue` of `center` overrides any `anchor` animations
     public var center: Change<CLLocationCoordinate2D>
 
     /// Represents a change to the zoom of the map.
@@ -14,7 +15,13 @@ public struct CameraTransition {
     public var padding: Change<UIEdgeInsets>
 
     /// Represents a change to the anchor of the map
+    /// NOTE: Incompatible with concurrent center animations
     public var anchor: Change<CGPoint>
+    
+    /// Set this value in order to make bearing/zoom animations
+    /// honor a constant anchor throughout the transition
+    /// NOTE: Incompatible with concurrent center animations
+    public var constantAnchor: CGPoint?
 
     /// Represents a change to the bearing of the map.
     public var bearing: Change<Double>
@@ -58,7 +65,8 @@ public struct CameraTransition {
 
         let cameraOptions = CameraOptions()
         cameraOptions.anchor    = anchor.toValue
-        cameraOptions.bearing   = shouldOptimizeBearingPath ? Self.optimizeBearing(startBearing: bearing.fromValue, endBearing: bearing.toValue) :  bearing.toValue
+        cameraOptions.bearing   = shouldOptimizeBearingPath ? Self.optimizeBearing(startBearing: bearing.fromValue, endBearing: bearing.toValue)
+                                                            :  bearing.toValue
 
         cameraOptions.padding   = padding.toValue
         cameraOptions.center    = center.toValue
