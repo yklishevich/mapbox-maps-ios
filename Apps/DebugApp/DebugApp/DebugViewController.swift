@@ -12,116 +12,89 @@ public class DebugViewController: UIViewController {
     
     internal var mapView: MapView!
     let identifier = "geoJSON-data-source"
-    var geoJSONSource = GeoJSONSource()
-    var newFeatures = String()
-    var originalFeatures = String()
+    
+    func addSource() {
+        var geojsonSrc = GeoJSONSource()
+        let feature = Feature(Point(mapView.centerCoordinate))
+        geojsonSrc.data = .feature(feature)
+        let result = mapView.style.addSource(source: geojsonSrc, identifier: identifier)
+        
+        switch result {
+        case .success(_):
+            print("Successfully added source")
+        case .failure(let error):
+            print("Source not added : \(error)")
+        }
+    }
+    
+    func updateSource() {
+    
+        let newGeojsonString =
+        """
+        {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                139.273681640625,
+                36.01356058518153
+              ],
+              [
+                140.48217773437497,
+                37.64903402157866
+              ]
+            ]
+          }
+        }
+        """
+        
+        let expected = mapView.mapboxMap.__map.setStyleSourcePropertyForSourceId(identifier, property: "data", value: newGeojsonString)
+        if expected.isError() {
+            print("Error in updating source! : \(expected.error)")
+        }
+    }
+    
+    func addLayer() {
+        var lineLayer = LineLayer(id: "my-layer")
+        
+        lineLayer.source = identifier
+        lineLayer.paint?.lineColor = .constant(.init(color: .red))
+        lineLayer.paint?.lineWidth = .constant(3.0)
+        lineLayer.layout?.lineCap = .constant(.round)
+        
+        let result = mapView.style.addLayer(layer: lineLayer)
+        switch result {
+        case .success(_):
+            print("Successfully added layer")
+        case .failure(let error):
+            print("Failed to add layer: \(error)")
+        }
+    }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        let resourceOptions = ResourceOptions(accessToken: "access_token")
         mapView = MapView(frame: view.bounds)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(mapView)
         
         // Set the center coordinate and zoom level.
         let centerCoordinate = CLLocationCoordinate2DMake(35.42486791930558, 136.95556640625)
-        mapView.centerCoordinate = centerCoordinate
-        mapView.zoom = 3
         
-        // Allow the view controller to receive information about map events.
-        mapView.on(.mapLoaded) { [weak self] _ in
-            guard let self = self else { return }
-            
-            self.originalFeatures = """
-                    {
-                      "type": "Feature",
-                      "properties": {},
-                      "geometry": {
-                        "type": "Point",
-                        "coordinates": [
-                          [
-                            136.95556640625,
-                            35.42486791930558
-                          ]
-                        ]
-                      }
-                    }
-                """
-            
-            self.newFeatures = """
-                    {
-                      "type": "Feature",
-                      "properties": {},
-                      "geometry": {
-                        "type": "LineString",
-                        "coordinates": [
-                          [
-                            136.95556640625,
-                            35.42486791930558
-                          ],
-                          [
-                            137.603759765625,
-                            36.146746777814364
-                          ],
-                          [
-                            139.273681640625,
-                            36.01356058518153
-                          ],
-                          [
-                            139.075927734375,
-                            37.39634613318923
-                          ],
-                          [
-                            140.48217773437497,
-                            37.64903402157866
-                          ]
-                        ]
-                      }
-                    }
-                """
-            
-            self.addGeoJSONSource(identifier: "source", features: self.originalFeatures as NSString)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                self.updateGeoJSONSource(identifier: "my-source", features: self.newFeatures as NSString)
-            }
-            
+        let camera = CameraOptions(center: centerCoordinate, zoom: 10)
+        mapView.camera.setCamera(to: camera)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) { [weak self] in
+            print("Adding a source")
+            self?.addSource()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+5) { [weak self] in
+            print("Updating a source")
+            self?.updateSource()
+            self?.addLayer()
         }
     }
-    
-    public func addGeoJSONSource(identifier: String, features: NSString) -> String {
-        mapView.style.addSource(source:  geoJSONSource, identifier: identifier)
-        let originalFeatureDict = convertStringToDictionary(text: originalFeatures as String)
-        _ = try? mapView.__map.setStyleSourcePropertyForSourceId(identifier, property: "data", value: features)
-        print("here are our features: \(features)")
-        //        var layer = try? CircleLayer(jsonObject: originalFeatureDict!)
-        //        layer?.sourceLayer = identifier
-        //        layer?.paint?.circleColor = .constant(ColorRepresentable(color: UIColor.lightGray))
-        //        _ = mapView.style.addLayer(layer: layer?)
-        
-        return identifier
-    }
-    
-    public func updateGeoJSONSource(identifier: String, features: NSString) {
-        let newFeatureDict = convertStringToDictionary(text: newFeatures as String)
-        _ = try? mapView.__map.setStyleSourcePropertyForSourceId(identifier, property: "data", value: features)
-        print("here are our features: \(features)")
-        //        var layer = try? LineLayer(jsonObject: newFeatureDict!)
-        //        layer?.sourceLayer = identifier
-        //        layer?.paint?.lineColor = .constant(ColorRepresentable(color: UIColor.lightGray))
-        //        _ = mapView.style.addLayer(layer: layer as! Layer)
-    }
-    
-    func convertStringToDictionary(text: String) -> [String:AnyObject]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
-                return json
-            } catch {
-                print("Something went wrong")
-            }
-        }
-        return nil
-    }
-    
 }
