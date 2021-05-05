@@ -25,7 +25,7 @@ internal class PanGestureHandler: GestureHandler {
 
             let point = pan.location(in: pan.view)
             delegate.panBegan(at: point)
-            delegate.gestureBegan(for: .pan)
+            delegate.gestureBegan(type: .pan)
 
         case .changed:
             let start = pan.location(in: pan.view)
@@ -54,6 +54,8 @@ internal class PanGestureHandler: GestureHandler {
                                         y: endPoint.y + driftOffset.y)
 
             delegate.panEnded(at: endPoint, shouldDriftTo: driftEndPoint)
+            
+            delegate.gestureEnded(type: .pan)
         default:
             break
         }

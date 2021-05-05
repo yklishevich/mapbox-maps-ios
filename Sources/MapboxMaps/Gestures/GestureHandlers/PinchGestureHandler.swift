@@ -28,7 +28,7 @@ internal class PinchGestureHandler: GestureHandler {
         if pinchGestureRecognizer.state == .began {
 
             scale = pow(2, delegate.scaleForZoom())
-            delegate.gestureBegan(for: .pinch)
+            delegate.gestureBegan(type: .pinch)
 
             /**
              TODO: Handle a concurrent rotate gesture here.
@@ -65,6 +65,8 @@ internal class PinchGestureHandler: GestureHandler {
             let possibleDrift = velocity > 0.0 && duration > 0.0
 
             delegate.pinchEnded(with: log2(newScale), andDrift: possibleDrift, andAnchor: pinchCenterPoint)
+            
+            delegate.gestureEnded(type: .pinch)
         }
     }
 }

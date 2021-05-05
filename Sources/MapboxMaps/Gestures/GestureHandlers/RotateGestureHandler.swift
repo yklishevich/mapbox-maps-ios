@@ -29,7 +29,7 @@ internal class RotateGestureHandler: GestureHandler {
         // TODO: Handle simultaneous zoom & rotate gestures
         if rotate.state == .began {
 
-            delegate.gestureBegan(for: .rotate)
+            delegate.gestureBegan(type: .rotate)
             initialAngle = delegate.rotationStartAngle()
 
         } else if rotate.state == .changed {
@@ -47,6 +47,8 @@ internal class RotateGestureHandler: GestureHandler {
                                    and: anchor,
                                    with: contextProvider?.fetchPinchState() ??
                                               UIGestureRecognizer.State.possible)
+            
+            delegate.gestureEnded(type: .rotate)
 
         }
     }

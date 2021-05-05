@@ -31,7 +31,7 @@ internal class PitchGestureHandler: GestureHandler {
 
     @objc internal func handlePitchGesture(_ gesture: UIPanGestureRecognizer) {
 
-        let horizontalTiltTolerance = delegate.horizontalPitchTiltTolerance()
+        let horizontalTiltTolerance = 45.0
 
         if gesture.numberOfTouches != 2 {
             gesture.state = .ended
@@ -51,7 +51,7 @@ internal class PitchGestureHandler: GestureHandler {
             */
             dragGestureTranslation = CGPoint(x: gestureTranslation.x, y: gestureTranslation.y-1)
             initialPitch = delegate.initialPitch()
-            delegate.gestureBegan(for: .pitch)
+            delegate.gestureBegan(type: .pitch)
 
         } else if gesture.state == .changed {
             let leftTouchPoint = gesture.location(ofTouch: 0, in: gesture.view)
@@ -83,6 +83,7 @@ internal class PitchGestureHandler: GestureHandler {
             }
         } else if gesture.state == .ended || gesture.state == .cancelled {
             delegate.pitchEnded()
+            delegate.gestureEnded(type: .pitch)
         }
     }
 }

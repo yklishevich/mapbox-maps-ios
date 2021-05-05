@@ -12,6 +12,9 @@ public class DebugViewController: UIViewController {
 
     internal var mapView: MapView!
     internal var runningAnimator: CameraAnimator?
+    
+    static var idleCount = 0
+    static var changeCount = 0
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +40,16 @@ public class DebugViewController: UIViewController {
             }
 
             print("The map has finished loading style data of type = \(type)")
+        }
+        
+        mapView.mapboxMap.onEvery(.cameraChanged) { (_) in
+            Self.changeCount += 1
+            print("*** Camera is changing!!!! Count: \(Self.changeCount)")
+        }
+        
+        mapView.mapboxMap.onEvery(.mapIdle) { (_) in
+            Self.idleCount += 1
+            print("*** Map is Idling!!!! Count: \(Self.idleCount)")
         }
 
         /**

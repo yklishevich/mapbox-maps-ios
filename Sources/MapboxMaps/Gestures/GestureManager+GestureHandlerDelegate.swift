@@ -60,9 +60,15 @@ extension GestureManager: GestureHandlerDelegate {
         cameraManager.cancelAnimations()
     }
 
-    internal func gestureBegan(for gestureType: GestureType) {
+    internal func gestureBegan(type: GestureType) {
         cameraManager.cancelAnimations()
-        delegate?.gestureBegan(for: gestureType)
+        runningGestures.insert(type)
+        delegate?.gestureBegan(type: type)        
+    }
+    
+    internal func gestureEnded(type: GestureType) {
+        runningGestures.remove(type)
+        delegate?.gestureEnded(type: type)
     }
 
     internal func scaleForZoom() -> CGFloat {
@@ -156,10 +162,6 @@ extension GestureManager: GestureHandlerDelegate {
             return 0
         }
         return mapView.cameraState.pitch
-    }
-
-    internal func horizontalPitchTiltTolerance() -> Double {
-        return 45.0
     }
 
     internal func pitchChanged(newPitch: CGFloat) {

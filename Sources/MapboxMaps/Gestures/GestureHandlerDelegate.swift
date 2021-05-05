@@ -19,7 +19,10 @@ internal protocol GestureHandlerDelegate: AnyObject {
     func cancelGestureTransitions()
 
     // Notifies conformer that a gesture has begun
-    func gestureBegan(for gestureType: GestureType)
+    func gestureBegan(type: GestureType)
+    
+    // Notifies conformer that a gesture has ended
+    func gestureEnded(type: GestureType)
 
     // Returns initial scale of the map
     func scaleForZoom() -> CGFloat
@@ -53,46 +56,4 @@ internal protocol GestureHandlerDelegate: AnyObject {
 
     // Pitch gesture ended
     func pitchEnded()
-}
-
-// Provides default implementation of GestureSupportableView methods.
-internal extension GestureHandlerDelegate {
-
-    func tapped(numberOfTaps: Int, numberOfTouches: Int) {}
-
-    func panBegan(at point: CGPoint) {}
-
-    // View has been panned
-    func panned(from startPoint: CGPoint, to endPoint: CGPoint) {}
-
-    // Pan on the view has ended (with a potential drift)
-    func panEnded(at endPoint: CGPoint, shouldDriftTo driftEndPoint: CGPoint) {}
-
-    func cancelGestureTransitions() {}
-
-    func gestureBegan(for gestureType: GestureType) {}
-
-    func scaleForZoom() -> CGFloat { return 0.0 }
-
-    func pinchScaleChanged(with newScale: CGFloat, andAnchor anchor: CGPoint) {}
-
-    func pinchEnded(with finalScale: CGFloat, andDrift possibleDrift: Bool, andAnchor anchor: CGPoint) {}
-
-    func rotationStartAngle() -> CGFloat { return 0.0 }
-
-    func rotationChanged(with changedAngle: CGFloat, and anchor: CGPoint, and pinchScale: CGFloat) {}
-
-    func rotationEnded(with finalAngle: CGFloat, and anchor: CGPoint, with pinchState: UIGestureRecognizer.State) {}
-
-    func quickZoomChanged(with newScale: CGFloat, and anchor: CGPoint) {}
-
-    func quickZoomEnded() {}
-
-    func initialPitch() -> CGFloat { return 0.0 }
-
-    func horizontalPitchTiltTolerance() -> Double { return 45.0 }
-
-    func pitchChanged(newPitch: CGFloat) {}
-
-    func pitchEnded() {}
 }

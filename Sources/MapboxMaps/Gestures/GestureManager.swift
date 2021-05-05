@@ -4,7 +4,10 @@ import CoreLocation
 public protocol GestureManagerDelegate: AnyObject {
 
     /// Informs the delegate that a gesture haas begun. Could be used to cancel camera tracking.
-    func gestureBegan(for gestureType: GestureType)
+    func gestureBegan(type: GestureType)
+    
+    /// Informs the delegate that a gesture has ended.
+    func gestureEnded(type: GestureType)
 }
 
 public final class GestureManager: NSObject {
@@ -24,9 +27,23 @@ public final class GestureManager: NSObject {
 
     /// The camera manager that responds to gestures.
     internal let cameraManager: CameraManagerProtocol
-
-    internal weak var delegate: GestureManagerDelegate?
-
+    
+    /// Subscribe as `GestureManagerDelegate` to be notified anytime a gesture begins or ends.
+    public weak var delegate: GestureManagerDelegate?
+    
+    /// A collection of currently running gestures on the map
+    internal var runningGestures = Set<GestureType>() {
+        didSet {
+            if runningGestures.count == 1 {
+                cameraManager.mapView?.mapboxMap.__map.setGestureInProgressForInProgress(true)
+            }
+            
+            if runningGestures.count == 0 {
+                cameraManager.mapView?.mapboxMap.__map.setGestureInProgressForInProgress(false)
+            }
+        }
+    }
+    
     internal init(for view: UIView, cameraManager: CameraManagerProtocol) {
         self.cameraManager = cameraManager
         self.view = view
@@ -93,7 +110,7 @@ extension GestureManager: UIGestureRecognizerDelegate {
                 guard let touchPointAngle = GestureUtilities.angleBetweenPoints(leftTouchPoint,
                                                                                 rightTouchPoint) else { return false }
 
-                let horizontalTiltTolerance = horizontalPitchTiltTolerance()
+                let horizontalTiltTolerance = 45.0
 
                 // If the angle between the pan touchpoints is greater then the
                 // tolerance specified, don't start the gesture.

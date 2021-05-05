@@ -22,7 +22,12 @@ internal class TapGestureHandler: GestureHandler {
 
     // Calls view to process the tap gesture
     @objc internal func handleTap(_ tap: UITapGestureRecognizer) {
-        delegate.gestureBegan(for: .tap(numberOfTaps: tap.numberOfTapsRequired, numberOfTouches: tap.numberOfTouchesRequired))
+        delegate.gestureBegan(
+            type: .tap(numberOfTaps: tap.numberOfTapsRequired,
+                      numberOfTouches: tap.numberOfTouchesRequired))
         delegate.tapped(numberOfTaps: tap.numberOfTapsRequired, numberOfTouches: tap.numberOfTouchesRequired)
+        delegate.gestureEnded(
+            type: .tap(numberOfTaps: tap.numberOfTapsRequired,
+                       numberOfTouches: tap.numberOfTouchesRequired))
     }
 }

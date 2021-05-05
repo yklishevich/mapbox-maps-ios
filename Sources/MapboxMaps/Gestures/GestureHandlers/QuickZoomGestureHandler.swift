@@ -26,7 +26,7 @@ internal class QuickZoomGestureHandler: GestureHandler {
         let touchPoint = gestureRecognizer.location(in: view)
 
         if gestureRecognizer.state == .began {
-            delegate.gestureBegan(for: .quickZoom)
+            delegate.gestureBegan(type: .quickZoom)
             quickZoomStart = touchPoint.y
             scale = delegate.scaleForZoom()
         } else if gestureRecognizer.state == .changed {
@@ -41,6 +41,7 @@ internal class QuickZoomGestureHandler: GestureHandler {
             delegate.quickZoomChanged(with: newScale, and: anchor)
         } else if gestureRecognizer.state == .ended || gestureRecognizer.state == .cancelled {
             delegate.quickZoomEnded()
+            delegate.gestureEnded(type: .quickZoom)
         }
     }
 }
