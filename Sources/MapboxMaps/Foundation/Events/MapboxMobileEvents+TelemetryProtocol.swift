@@ -13,18 +13,18 @@ extension MMEEventsManager: TelemetryProtocol {
 
     func turnstile() {
 
-        if UserDefaults.standard.bool(forKey: "disableEvents") {
-            return
-        }
-
-        if #available(iOS 12.0, *) {
-            let log = OSLog(subsystem: "com.mapbox.maps", category: "events" )
-            let spid = OSSignpostID(log: log)
-            os_signpost(.begin, log: log, name: "turnstile", signpostID: spid)
-            sendTurnstileEvent()
-            os_signpost(.end, log: log, name: "turnstile", signpostID: spid)
-        } else {
-            sendTurnstileEvent()
-        }
+//        if UserDefaults.standard.bool(forKey: "disableEvents") {
+//            return
+//        }
+//
+//        if #available(iOS 12.0, *) {
+//            let log = OSLog(subsystem: "com.mapbox.maps", category: "events" )
+//            let spid = OSSignpostID(log: log)
+//            os_signpost(.begin, log: log, name: "turnstile", signpostID: spid)
+//            sendTurnstileEvent()
+//            os_signpost(.end, log: log, name: "turnstile", signpostID: spid)
+//        } else {
+//            sendTurnstileEvent()
+//        }
     }
 }

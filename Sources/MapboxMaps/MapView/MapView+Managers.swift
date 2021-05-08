@@ -1,4 +1,5 @@
 import UIKit
+import os
 
 /// The `MapManager` is responsible for managing the `mapView`
 /// and orchestrating between the different components of the Mapbox SDK
@@ -6,27 +7,68 @@ extension MapView {
 
     /// Configures/Initializes the map with `mapConfig`
     internal func setupManagers() {
+        if #available(iOS 12.0, *) {
+            let log = OSLog(subsystem: "com.mapbox.maps", category: "events" )
+            let spid = OSSignpostID(log: log)
 
-        // Initialize/configure the map if needed
-        setupMapView(with: mapConfig.render)
+            // Initialize/configure the map if needed
+            os_signpost(.begin, log: log, name: "setupMapView", signpostID: spid)
+            setupMapView(with: mapConfig.render)
+            os_signpost(.end, log: log, name: "setupMapView", signpostID: spid)
 
-        // Initialize/Configure camera manager first since Gestures needs it as dependency
-        setupCamera(for: self, options: mapConfig.camera)
+            // Initialize/Configure camera manager first since Gestures needs it as dependency
+            os_signpost(.begin, log: log, name: "setupCamera", signpostID: spid)
+            setupCamera(for: self, options: mapConfig.camera)
+            os_signpost(.end, log: log, name: "setupCamera", signpostID: spid)
 
-        // Initialize/Configure style manager
-        setupStyle(with: mapboxMap.__map)
+            // Initialize/Configure style manager
+            os_signpost(.begin, log: log, name: "setupStyle", signpostID: spid)
+            setupStyle(with: mapboxMap.__map)
+            os_signpost(.end, log: log, name: "setupStyle", signpostID: spid)
 
-        // Initialize/Configure gesture manager
-        setupGestures(with: self, options: mapConfig.gestures, cameraManager: camera)
+            // Initialize/Configure gesture manager
+            os_signpost(.begin, log: log, name: "setupGestures", signpostID: spid)
+            setupGestures(with: self, options: mapConfig.gestures, cameraManager: camera)
+            os_signpost(.end, log: log, name: "setupGestures", signpostID: spid)
 
-        // Initialize/Configure ornaments manager
-        setupOrnaments(with: self)
+            // Initialize/Configure ornaments manager
+            os_signpost(.begin, log: log, name: "setupOrnaments", signpostID: spid)
+            setupOrnaments(with: self)
+            os_signpost(.end, log: log, name: "setupOrnaments", signpostID: spid)
 
-        // Initialize/Configure location manager
-        setupUserLocationManager(with: self, options: mapConfig.location)
+            // Initialize/Configure location manager
+            os_signpost(.begin, log: log, name: "setupUserLocationManager", signpostID: spid)
+            setupUserLocationManager(with: self, options: mapConfig.location)
+            os_signpost(.end, log: log, name: "setupUserLocationManager", signpostID: spid)
 
-        // Initialize/Configure annotations manager
-        setupAnnotationManager(with: self, and: style, options: mapConfig.annotations)
+            // Initialize/Configure annotations manager
+            os_signpost(.begin, log: log, name: "setupAnnotationManager", signpostID: spid)
+            setupAnnotationManager(with: self, and: style, options: mapConfig.annotations)
+            os_signpost(.end, log: log, name: "setupAnnotationManager", signpostID: spid)
+
+        } else {
+
+            // Initialize/configure the map if needed
+            setupMapView(with: mapConfig.render)
+
+            // Initialize/Configure camera manager first since Gestures needs it as dependency
+            setupCamera(for: self, options: mapConfig.camera)
+
+            // Initialize/Configure style manager
+            setupStyle(with: mapboxMap.__map)
+
+            // Initialize/Configure gesture manager
+            setupGestures(with: self, options: mapConfig.gestures, cameraManager: camera)
+
+            // Initialize/Configure ornaments manager
+            setupOrnaments(with: self)
+
+            // Initialize/Configure location manager
+            setupUserLocationManager(with: self, options: mapConfig.location)
+
+            // Initialize/Configure annotations manager
+            setupAnnotationManager(with: self, and: style, options: mapConfig.annotations)
+        }
     }
 
     /// Updates the map with new configuration options. Causes underlying structures to reload configuration synchronously.
@@ -82,7 +124,7 @@ extension MapView {
     internal func setupUserLocationManager(with locationSupportableMapView: LocationSupportableMapView, options: LocationOptions) {
 
         location = LocationManager(locationOptions: options,
-                                          locationSupportableMapView: locationSupportableMapView)
+                                   locationSupportableMapView: locationSupportableMapView)
     }
 
     internal func updateUserLocationManager(with options: LocationOptions) {
