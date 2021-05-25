@@ -43,8 +43,8 @@ internal class MapboxScaleBarOrnamentView: UIView {
         return labels
     }()
 
-    private var _bars: [UIView]?
-    private var bars: [UIView] {
+    internal var _bars: [UIView]?
+    internal var bars: [UIView] {
         if _bars == nil {
             var bars: [UIView] = []
             for _ in 0..<row.numberOfBars {
@@ -100,7 +100,7 @@ internal class MapboxScaleBarOrnamentView: UIView {
         return isMetricLocale ? metersPerPoint : metersPerPoint * Constants.feetPerMeter
     }
 
-    private var maximumWidth: CGFloat {
+    internal var maximumWidth: CGFloat {
         guard let bounds = superview?.bounds else {
             return 0
         }
