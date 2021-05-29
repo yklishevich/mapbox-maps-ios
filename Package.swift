@@ -24,6 +24,11 @@ let package = Package(
             exclude: [
                 "MapView/Info.plist",
                 "Style/README.md",
+            ],
+            swiftSettings: [
+              .unsafeFlags(
+                ["-warnings-as-errors"],
+                .when(configuration: .release))
             ]
         ),
         .testTarget(
