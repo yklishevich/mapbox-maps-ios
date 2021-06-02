@@ -36,11 +36,11 @@ public struct Puck2DConfiguration: Equatable {
     }
 
     internal var resolvedTopImage: UIImage? {
-        topImage ?? UIImage(named: "location-dot-inner", in: .mapboxMaps, compatibleWith: nil)
+        topImage ?? UIImage(named: "triangle", in: .mapboxMaps, compatibleWith: nil)
     }
 
     internal var resolvedBearingImage: UIImage? {
-        bearingImage ?? UIImage(named: "location-dot-outer", in: .mapboxMaps, compatibleWith: nil)
+        bearingImage ?? UIImage(named: "triangle", in: .mapboxMaps, compatibleWith: nil)
     }
 
     internal var resolvedScale: Value<Double> {
@@ -86,10 +86,7 @@ internal class Puck2D: Puck {
                 location.internalLocation.altitude
             ]
 
-            var bearing: Double = 0.0
-            if let latestBearing = location.heading {
-                bearing = latestBearing.trueHeading
-            }
+            let bearing: Double = location.course
 
             do {
                 try style.setLayerProperties(for: locationIndicatorLayer.id,
