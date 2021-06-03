@@ -20,6 +20,12 @@ public class ExampleTableViewController: UITableViewController {
         searchBar.delegate = self
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
+        
+        
+
+        var example = allExamples[28]
+        let exampleViewController = example.makeViewController()
+        navigationController?.pushViewController(exampleViewController, animated: true)
     }
 }
 
