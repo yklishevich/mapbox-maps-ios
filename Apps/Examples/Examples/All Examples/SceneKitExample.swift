@@ -13,7 +13,7 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
     var scene: SCNScene!
     var modelNode: SCNNode!
     var cameraNode: SCNNode!
-    var textNode: SCNNode!
+//    var textNode: SCNNode!
     var useCPUOcclusion = false
 
     override public func viewDidLoad() {
@@ -21,9 +21,9 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
 
         let camera = CameraOptions(center: self.modelOrigin,
                                    zoom: 18,
-                                   bearing: 180,
-                                   pitch: 60)
-        let options = MapInitOptions(cameraOptions: camera)
+                                   bearing: 0,
+                                   pitch: 0)
+        let options = MapInitOptions(cameraOptions: camera, styleURI: .streets)
 
         mapView = MapView(frame: view.bounds, mapInitOptions: options)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -34,15 +34,12 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
         }
     }
 
-    override public func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
     func addModelAndTerrain() {
         try! mapView.mapboxMap.style.addCustomLayer(
             withId: "Custom",
             layerHost: self,
-            layerPosition: .below("waterway-label"))
+            layerPosition: .below("waterway-label")
+        )
 
         var demSource = RasterDemSource()
         demSource.url = "mapbox://mapbox.mapbox-terrain-dem-v1"
@@ -143,7 +140,9 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
         return matrix
     }
 
-    public func render(_ parameters: CustomLayerRenderParameters, mtlCommandBuffer: MTLCommandBuffer, mtlRenderPassDescriptor: MTLRenderPassDescriptor) {
+    public func render(_ parameters: CustomLayerRenderParameters,
+                       mtlCommandBuffer: MTLCommandBuffer,
+                       mtlRenderPassDescriptor: MTLRenderPassDescriptor) {
         guard let colorTexture = mtlRenderPassDescriptor.colorAttachments[0].texture else {
             return
         }
