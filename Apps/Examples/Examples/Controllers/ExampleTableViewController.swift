@@ -23,7 +23,8 @@ public class ExampleTableViewController: UITableViewController {
         
         
 
-        var example = allExamples[28]
+        //        var example = allExamples[28]
+        var example = allExamples[36] // "Add a custom rendered layer", `CustomLayerExample`
         let exampleViewController = example.makeViewController()
         navigationController?.pushViewController(exampleViewController, animated: true)
     }

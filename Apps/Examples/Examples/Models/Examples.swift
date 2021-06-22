@@ -133,6 +133,9 @@ public struct Examples {
                 type: SwiftUIExample.self),
         Example(title: "Track Location Updates",
                 description: "Track a device's GPS updates with the camera and location provider",
-                type: TrackingModeExample.self)
+                type: TrackingModeExample.self),
+        Example(title: "Add an image",
+                description: "Add an image",
+                type: ImageSourceExample.self),
     ]
 }
