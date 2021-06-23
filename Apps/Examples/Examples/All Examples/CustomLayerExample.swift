@@ -101,7 +101,9 @@ extension CustomLayerExample: CustomLayerHost {
         }
     }
 
-    public func render(_ parameters: CustomLayerRenderParameters, mtlCommandBuffer: MTLCommandBuffer, mtlRenderPassDescriptor: MTLRenderPassDescriptor) {
+    public func render(_ parameters: CustomLayerRenderParameters,
+                       mtlCommandBuffer: MTLCommandBuffer,
+                       mtlRenderPassDescriptor: MTLRenderPassDescriptor) {
 
         let vertices = [
             simd_float2(0, 0.5),

@@ -28,6 +28,8 @@
 		73C1558525DC775A00AFAE20 /* LayerBelowExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1558425DC775A00AFAE20 /* LayerBelowExample.swift */; };
 		A30D36312681F0A500E9B384 /* ImageSourceExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30D36302681F0A500E9B384 /* ImageSourceExample.swift */; };
 		A30D36362681F73F00E9B384 /* radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = A30D36352681F73F00E9B384 /* radar.gif */; };
+		A30D369A2683571800E9B384 /* radar2.gif in Resources */ = {isa = PBXBuildFile; fileRef = A30D36992683571800E9B384 /* radar2.gif */; };
+		A30D369E2683578900E9B384 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30D369D2683578900E9B384 /* UIImage+Gif.swift */; };
 		A4211CE62592549900D215B4 /* RestrictCoordinateBoundsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4211CE52592549900D215B4 /* RestrictCoordinateBoundsExample.swift */; };
 		B5327EBF260277930095B6BD /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5327EBE260277930095B6BD /* Example.swift */; };
 		B5327EC3260277AC0095B6BD /* ExampleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5327EC2260277AC0095B6BD /* ExampleProtocol.swift */; };
@@ -141,6 +143,8 @@
 		73C1558425DC775A00AFAE20 /* LayerBelowExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerBelowExample.swift; sourceTree = "<group>"; };
 		A30D36302681F0A500E9B384 /* ImageSourceExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSourceExample.swift; sourceTree = "<group>"; };
 		A30D36352681F73F00E9B384 /* radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = radar.gif; sourceTree = "<group>"; };
+		A30D36992683571800E9B384 /* radar2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = radar2.gif; sourceTree = "<group>"; };
+		A30D369D2683578900E9B384 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		A4211CE52592549900D215B4 /* RestrictCoordinateBoundsExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictCoordinateBoundsExample.swift; sourceTree = "<group>"; };
 		A4AC5DEB2542CB2200995E4C /* CustomStyleURLExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStyleURLExample.swift; sourceTree = "<group>"; };
 		B5327EBE260277930095B6BD /* Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 		0746C151252FA9E1001638BD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A30D369D2683578900E9B384 /* UIImage+Gif.swift */,
 				0746C152252FAA03001638BD /* UIViewController+Children.swift */,
 			);
 			path = Extensions;
@@ -353,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				A30D36352681F73F00E9B384 /* radar.gif */,
+				A30D36992683571800E9B384 /* radar2.gif */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -474,6 +480,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A30D369A2683571800E9B384 /* radar2.gif in Resources */,
 				07B071D32547CFC3007F2865 /* GeoJSONSourceExample.geojson in Resources */,
 				A30D36362681F73F00E9B384 /* radar.gif in Resources */,
 				03BB33F925EDA19200109B28 /* 34M_17.dae in Resources */,
@@ -583,6 +590,7 @@
 				CADCF7222584990E0065C51B /* ColorExpressionExample.swift in Sources */,
 				CADCF733258499130065C51B /* Examples.swift in Sources */,
 				CADCF743258499570065C51B /* BasicMapExample.swift in Sources */,
+				A30D369E2683578900E9B384 /* UIImage+Gif.swift in Sources */,
 				CADCF7232584990E0065C51B /* UpdatePointAnnotationPositionExample.swift in Sources */,
 				CADCF72C2584990E0065C51B /* PointAnnotationExample.swift in Sources */,
 				CADCF7242584990E0065C51B /* AnimateLayerExample.swift in Sources */,
