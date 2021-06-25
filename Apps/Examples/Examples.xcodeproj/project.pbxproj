@@ -224,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				A30D36302681F0A500E9B384 /* ImageSourceExample.swift */,
-				CA628413262DFD5C00651488 /* OfflineManagerExample.storyboard */,
 				58A3C0C825C4B93600CAE5F0 /* AnimateGeoJSONLineExample.swift */,
 				07DBDC91254C94C500F89304 /* AnimateLayerExample.swift */,
 				CADCF742258499570065C51B /* BasicMapExample.swift */,
@@ -357,6 +356,7 @@
 		A30D36342681F72A00E9B384 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CA628413262DFD5C00651488 /* OfflineManagerExample.storyboard */,
 				A30D36352681F73F00E9B384 /* radar.gif */,
 				A30D36992683571800E9B384 /* radar2.gif */,
 			);

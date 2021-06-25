@@ -32,13 +32,6 @@ class ImageSourceExample: UIViewController, ExampleProtocol {
             [-71.516, 37.936],  // bottomRight
             [-80.425, 37.936]   // bottomLeft
         ]
-        
-        let coordinates2 = [
-            [-80.425, 66.437],  // topLeft
-            [-71.516, 66.437],  // topRight
-            [-71.516, 37.936],  // bottomRight
-            [-80.425, 37.936]   // bottomLeft
-        ]
 
         // Create an MGLImageSource, used to add georeferenced raster images to a map.
         
@@ -50,12 +43,20 @@ class ImageSourceExample: UIViewController, ExampleProtocol {
         
         try! mapView.mapboxMap.style.addSource(imageSource, id: imageSourceId)
 
-        var rasterLayer = RasterLayer(id: "image_layer-id")
-        rasterLayer.source = "add_image"
+        var rasterLayer = RasterLayer(id: imageLayerId)
+        rasterLayer.source = imageSourceId
         
         //            try! mapView.mapboxMap.style.addLayer(with: properties, layerPosition: .below("water"))
         try! mapView.mapboxMap.style.addLayer(rasterLayer)
         
+        
+//        let coordinates2 = [
+//            [-80.425, 66.437],  // topLeft
+//            [-71.516, 66.437],  // topRight
+//            [-71.516, 37.936],  // bottomRight
+//            [-80.425, 37.936]   // bottomLeft
+//        ]
+//
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
 ////            var imageSource: ImageSource = try! mapView.mapboxMap.style.source(withId: imageSourceId)
 ////            imageSource.coordinates = coordinates2

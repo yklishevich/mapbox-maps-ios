@@ -22,7 +22,7 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
         let camera = CameraOptions(center: self.modelOrigin,
                                    zoom: 18,
                                    bearing: 180,
-                                   pitch: 60)
+                                   pitch: 0)
         let options = MapInitOptions(cameraOptions: camera, styleURI: .satellite)
 //        let options = MapInitOptions(cameraOptions: camera, styleURI: .streets)
 
@@ -31,48 +31,12 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
         view.addSubview(mapView)
 
         mapView.mapboxMap.onNext(.styleLoaded) { _ in
-            self.addModelAndTerrain()
+            try! self.mapView.mapboxMap.style.addCustomLayer(
+                withId: "Custom",
+                layerHost: self,
+                layerPosition: .default
+            )
         }
-    }
-
-    func addModelAndTerrain() {
-        //        try! mapView.mapboxMap.style.addCustomLayer(
-        //            withId: "Custom",
-        //            layerHost: self,
-        //            layerPosition: .below("waterway-label")
-        //        )
-        try! mapView.mapboxMap.style.addCustomLayer(
-            withId: "Custom",
-            layerHost: self,
-            layerPosition: .default
-        )
-
-//        var demSource = RasterDemSource()
-//        demSource.url = "mapbox://mapbox.mapbox-terrain-dem-v1"
-//        demSource.tileSize = 512
-//        demSource.maxzoom = 14.0
-//
-//        try! mapView.mapboxMap.style.addSource(demSource, id: "mapbox-dem")
-//
-//        let terrain = Terrain(sourceId: "mapbox-dem")
-//        try! mapView.mapboxMap.style.setTerrain(terrain)
-//
-//        var skyLayer = SkyLayer(id: "sky-layer")
-//        skyLayer.skyType = .constant(.atmosphere)
-//        skyLayer.skyAtmosphereSun = .constant([0, 0])
-//        skyLayer.skyAtmosphereSunIntensity = .constant(15.0)
-//
-//        try! mapView.mapboxMap.style.addLayer(skyLayer)
-//
-//        // Re-use terrain source for hillshade
-//        let properties = [
-//            "id": "terrain_hillshade",
-//            "type": "hillshade",
-//            "source": "mapbox-dem",
-//            "hillshade-illumination-anchor": "map"
-//        ] as [ String: Any ]
-//
-//        try! mapView.mapboxMap.style.addLayer(with: properties, layerPosition: .below("water"))
     }
 
     public func renderingWillStart(_ metalDevice: MTLDevice, colorPixelFormat: UInt, depthStencilPixelFormat: UInt) {
@@ -175,7 +139,9 @@ public class SceneKitExample: UIViewController, ExampleProtocol, CustomLayerHost
         transformSimd[3, 3] = m[15].doubleValue
 
         // Model is using metric unit system: scale x and y from meters to mercator and keep z is in meters.
-        let meterInMercatorCoordinateUnits = 1.0 / (Projection.getMetersPerPixelAtLatitude(forLatitude: modelOrigin.latitude, zoom: parameters.zoom))
+        let meterInMercatorCoordinateUnits =
+            1.0 / (Projection.getMetersPerPixelAtLatitude(forLatitude: modelOrigin.latitude, zoom: parameters.zoom))
+        
         let modelScale = makeScaleMatrix(xScale: meterInMercatorCoordinateUnits, yScale: -meterInMercatorCoordinateUnits, zScale: 1)
 
         // Translate scaled model to model origin (in web mercator coordinates) and elevate to model origin's altitude (in meters).
